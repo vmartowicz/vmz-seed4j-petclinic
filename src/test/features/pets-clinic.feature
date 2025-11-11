@@ -10,6 +10,8 @@ Feature: Pets clinic
     Given I am logged in as "admin"
     When I add petType to clinic
       | Name | Cat |
+    Then I should have created petType
+      | Name | Cat |
     Then I should have petTypes
       | Name |
       | Cat  |

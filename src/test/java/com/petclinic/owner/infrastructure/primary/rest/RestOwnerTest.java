@@ -1,4 +1,4 @@
-package com.petclinic.owner.infrastructure.primary;
+package com.petclinic.owner.infrastructure.primary.rest;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 

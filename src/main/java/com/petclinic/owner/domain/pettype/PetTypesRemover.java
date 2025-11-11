@@ -8,7 +8,6 @@ public class PetTypesRemover {
 
   public PetTypesRemover(PetTypesRepository pettypes) {
     Assert.notNull("pettypes", pettypes);
-
     this.pettypes = pettypes;
   }
 

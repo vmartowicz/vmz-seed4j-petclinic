@@ -41,4 +41,10 @@ public class PetTypesApplicationService {
   public void remove(PetTypeId pettype) {
     remover.remove(pettype);
   }
+
+  @Transactional
+  @PreAuthorize("can('update', #petTypeToUpdate)")
+  public PetType update(PetTypeToUpdate petTypeToUpdate) {
+    return creator.update(petTypeToUpdate);
+  }
 }
