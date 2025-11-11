@@ -16,4 +16,9 @@ public class PetTypesCreator {
     var createdPetType = petTypeToCreate.create();
     return pettypes.save(createdPetType);
   }
+
+  public PetType update(PetTypeToUpdate petTypeToUpdate) {
+    var updatePetType = petTypeToUpdate.update();
+    return pettypes.save(updatePetType);
+  }
 }

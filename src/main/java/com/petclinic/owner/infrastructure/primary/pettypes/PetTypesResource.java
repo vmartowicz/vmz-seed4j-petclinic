@@ -37,6 +37,14 @@ class PetTypesResource {
     return ResponseEntity.ok(RestPetTypes.from(pettypes.findAllPetTypes()));
   }
 
+  @GetMapping("/{pettype-id}")
+  @Operation(summary = "Get pet type by id")
+  @ApiResponse(description = "Pet Type", responseCode = "200")
+  @ApiResponse(responseCode = "404", description = "Pet Type not found")
+  ResponseEntity<RestPetType> getPetType(@PathVariable("pettype-id") UUID id) {
+    return ResponseEntity.of(pettypes.find(new PetTypeId(id)).map(RestPetType::from));
+  }
+
   @DeleteMapping("/{pettype-id}")
   @Operation(summary = "Remove pet type from clinic")
   @ApiResponse(description = "Pet type removed from the clinic", responseCode = "200")

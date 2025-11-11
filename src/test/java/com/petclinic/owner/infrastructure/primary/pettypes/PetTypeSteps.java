@@ -11,8 +11,7 @@ import java.util.Map;
 
 public class PetTypeSteps {
 
-  private static final String ADD_PET_TYPE_TEMPLATE =
-    """
+  private static final String ADD_PET_TYPE_TEMPLATE = """
     {
       "name": "{NAME}"
     }
@@ -40,5 +39,12 @@ public class PetTypeSteps {
     rest.get("/api/pet-types");
 
     assertThatLastResponse().hasOkStatus().hasElement("$.pettypes").containingExactly(petTypes);
+  }
+
+  @Then("I should have created petType")
+  public void shouldHaveCreatedPetType(Map<String, String> petTypes) {
+    rest.get("/api/pet-types/" + CucumberRestTestContext.getElement("$.id"));
+
+    assertThatLastResponse().hasOkStatus().hasResponse().containing(petTypes);
   }
 }
