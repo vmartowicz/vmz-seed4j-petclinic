@@ -17,5 +17,14 @@
 
   <!-- <include file="config/liquibase/changelog/0000000000_example.xml" relativeToChangelogFile="false" /> -->
   <include file="config/liquibase/changelog/20250726215542_sample_feature_schema.xml" relativeToChangelogFile="false" />
+  <include file="config/liquibase/changelog/20250527091100_added_entity_PetType.xml" relativeToChangelogFile="false" />
+  <include file="config/liquibase/changelog/20250527091101_added_entity_Specialty.xml" relativeToChangelogFile="false" />
+  <include file="config/liquibase/changelog/20250527091102_added_entity_Vet.xml" relativeToChangelogFile="false" />
+  <include file="config/liquibase/changelog/20250527091103_added_entity_Owner.xml" relativeToChangelogFile="false" />
+  <include file="config/liquibase/changelog/20250527091104_added_entity_Pet.xml" relativeToChangelogFile="false" />
+  <include file="config/liquibase/changelog/20250527091105_added_entity_Visit.xml" relativeToChangelogFile="false" />
+  <include file="config/liquibase/changelog/20250527091102_added_entity_constraints_Vet.xml" relativeToChangelogFile="false" />
+  <include file="config/liquibase/changelog/20250527091104_added_entity_constraints_Pet.xml" relativeToChangelogFile="false" />
+  <include file="config/liquibase/changelog/20250527091105_added_entity_constraints_Visit.xml" relativeToChangelogFile="false" />
   <!-- jhipster-needle-liquibase-add-changelog -->
 </databaseChangeLog>

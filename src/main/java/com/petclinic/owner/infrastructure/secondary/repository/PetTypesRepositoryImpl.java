@@ -28,9 +28,7 @@ public class PetTypesRepositoryImpl implements PetTypesRepository {
   @Override
   public PetType save(PetType petType) {
     Assert.notNull("petType", petType);
-    PetTypeEntity entity = PetTypeEntity.from(petType);
-    PetTypeEntity savedEntity = pettypes.save(entity);
-    return savedEntity.toDomain();
+    return pettypes.save(PetTypeEntity.from(petType)).toDomain();
   }
 
   @Override

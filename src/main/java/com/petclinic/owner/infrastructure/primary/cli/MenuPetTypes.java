@@ -5,13 +5,13 @@ import com.petclinic.owner.domain.pettype.PetType;
 import com.petclinic.owner.domain.pettype.PetTypeId;
 import com.petclinic.owner.domain.pettype.PetTypeName;
 import com.petclinic.owner.domain.pettype.PetTypeToCreate;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.UUID;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MenuPetTypes implements CommandLineRunner {
+public class MenuPetTypes /*implements CommandLineRunner*/ {
 
   private final PetTypesApplicationService service;
   private final Scanner scanner = new Scanner(System.in);
@@ -20,7 +20,7 @@ public class MenuPetTypes implements CommandLineRunner {
     this.service = service;
   }
 
-  @Override
+  //@Override
   public void run(String... args) {
     while (true) {
       System.out.println(
@@ -62,8 +62,8 @@ public class MenuPetTypes implements CommandLineRunner {
   private void findPetType() {
     System.out.println("Enter pet type id:");
     try {
-      PetType customer = service.find(new PetTypeId(UUID.fromString(scanner.nextLine())));
-      System.out.println(customer);
+      Optional<PetType> petType = service.find(new PetTypeId(UUID.fromString(scanner.nextLine())));
+      petType.ifPresent(p -> System.out.println(petType.get()));
     } catch (Exception e) {
       System.out.println("Error: " + e.getMessage());
     }
