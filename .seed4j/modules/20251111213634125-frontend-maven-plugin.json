@@ -1,0 +1,16 @@
+{
+  "module": "frontend-maven-plugin",
+  "date": "2025-11-11T21:36:34.125890350Z",
+  "properties": {
+    "keycloakRealmName": "jhipetclinic",
+    "endOfLine": "lf",
+    "springConfigurationFormat": "yaml",
+    "packageName": "com.petclinic",
+    "projectName": "jhipetclinic",
+    "serverPort": 8080,
+    "indentSize": 2,
+    "keycloakClientScopeName": "jhipetclinic",
+    "nodePackageManager": "npm",
+    "baseName": "jhipetclinic"
+  }
+}

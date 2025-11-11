@@ -13,12 +13,7 @@ export default defineConfig({
     },
     globals: true,
     logHeapUsage: true,
-    poolOptions: {
-      threads: {
-        minThreads: 1,
-        maxThreads: 2,
-      },
-    },
+    maxWorkers: 2,
     environment: 'jsdom',
     cache: false,
     include: ['src/test/webapp/unit/**/*.{test,spec}.?(c|m)[jt]s?(x)'],
@@ -31,6 +26,7 @@ export default defineConfig({
       include: ['src/main/webapp/**/*.ts?(x)'],
       exclude: [
         ...(configDefaults.coverage.exclude as string[]),
+        'src/main/webapp/app/router.ts',
         'src/main/webapp/app/main.ts',
         'src/main/webapp/app/injections.ts',
         'src/main/webapp/**/*.component.ts',

@@ -13,7 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 @UnitTest
 class ClaimsTest {
 
-  private static final String CLAIMS_NAMESPACE = "https://www.jhipster.tech/";
+  private static final String CLAIMS_NAMESPACE = "https://seed4j.com/";
 
   @Test
   void shouldExtractAuthorityFromClaims() {

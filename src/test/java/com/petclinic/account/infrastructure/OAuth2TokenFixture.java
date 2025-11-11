@@ -17,11 +17,11 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 public final class OAuth2TokenFixture {
 
   private static final String TOKEN_ID =
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9" +
-    ".eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsIm" +
-    "p0aSI6ImQzNWRmMTRkLTA5ZjYtNDhmZi04YTkzLTdjNmYwMzM5MzE1OSIsImlhdCI6MTU0M" +
-    "Tk3MTU4MywiZXhwIjoxNTQxOTc1MTgzfQ.QaQOarmV8xEUYV7yvWzX3cUE_4W1luMcWCwpr" +
-    "oqqUrg";
+    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9"
+    + ".eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsIm"
+    + "p0aSI6ImQzNWRmMTRkLTA5ZjYtNDhmZi04YTkzLTdjNmYwMzM5MzE1OSIsImlhdCI6MTU0M"
+    + "Tk3MTU4MywiZXhwIjoxNTQxOTc1MTgzfQ.QaQOarmV8xEUYV7yvWzX3cUE_4W1luMcWCwpr"
+    + "oqqUrg";
 
   private OAuth2TokenFixture() {}
 
@@ -52,7 +52,7 @@ public final class OAuth2TokenFixture {
   }
 
   public static JwtAuthenticationToken testJwtAuthenticationToken() {
-    Jwt.Builder jwt = Jwt.withTokenValue("token-just-for-drinking-beers").header("alg", JwsAlgorithms.RS256).subject("jhipster");
+    Jwt.Builder jwt = Jwt.withTokenValue("token-just-for-drinking-beers").header("alg", JwsAlgorithms.RS256).subject("seed4j");
     testAuthenticationClaims().forEach(jwt::claim);
     return new JwtAuthenticationToken(jwt.build(), adminAuthorities());
   }

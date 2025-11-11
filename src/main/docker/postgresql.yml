@@ -1,9 +1,9 @@
 # This configuration is intended for development purpose, it's **your** responsibility to harden it for production
 services:
   postgresql:
-    image: postgres:17.5
+    image: postgres:18.0
     # volumes:
-    #   - ~/volumes/jhipster/jhipetclinic/postgresql/:/var/lib/postgresql/data/
+    #   - ~/volumes/seed4j/jhipetclinic/postgresql/:/var/lib/postgresql/data/
     environment:
       - POSTGRES_USER=jhipetclinic
       - POSTGRES_PASSWORD=

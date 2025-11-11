@@ -10,7 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 final class Claims {
 
-  static final String CLAIMS_NAMESPACE = "https://www.jhipster.tech/";
+  static final String CLAIMS_NAMESPACE = "https://seed4j.com/";
 
   private Claims() {}
 
@@ -28,6 +28,10 @@ final class Claims {
 
   @SuppressWarnings("java:S6204")
   private static List<GrantedAuthority> mapRolesToGrantedAuthorities(Collection<String> roles) {
-    return roles.stream().filter(role -> role.startsWith("ROLE_")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+    return roles
+      .stream()
+      .filter(role -> role.startsWith("ROLE_"))
+      .map(SimpleGrantedAuthority::new)
+      .collect(Collectors.toList());
   }
 }

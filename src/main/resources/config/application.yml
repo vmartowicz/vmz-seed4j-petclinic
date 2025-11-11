@@ -4,7 +4,7 @@ logging:
       petclinic: INFO
 spring:
   application:
-    name: Jhipetclinic
+    name: jhipetclinic
   datasource:
     driver-class-name: org.postgresql.Driver
     hikari:

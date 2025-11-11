@@ -4,9 +4,9 @@
 
 ### Java
 
-You need to have Java 21:
+You need to have Java 25:
 
-- [JDK 21](https://openjdk.java.net/projects/jdk/21/)
+- [JDK 25](https://openjdk.java.net/projects/jdk/25/)
 
 ### Node.js and NPM
 
@@ -27,7 +27,7 @@ npm install
 - [Local server](http://localhost:8080)
 - [Local API doc](http://localhost:8080/swagger-ui.html)
 
-<!-- jhipster-needle-localEnvironment -->
+<!-- seed4j-needle-localEnvironment -->
 
 ## Start up
 
@@ -43,7 +43,7 @@ docker compose -f src/main/docker/postgresql.yml up -d
 docker compose -f src/main/docker/keycloak.yml up -d
 ```
 
-<!-- jhipster-needle-startupCommand -->
+<!-- seed4j-needle-startupCommand -->
 
 ## Documentation
 
@@ -63,4 +63,4 @@ docker compose -f src/main/docker/keycloak.yml up -d
 - [Cucumber authentication](documentation/cucumber-authentication.md)
 - [Sample](documentation/sample.md)
 
-<!-- jhipster-needle-documentation -->
+<!-- seed4j-needle-documentation -->

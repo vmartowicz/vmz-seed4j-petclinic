@@ -109,10 +109,7 @@ You may need to mock beans for your component tests, but you won't be able to do
 ```java
 @ActiveProfiles("test")
 @CucumberContextConfiguration
-@SpringBootTest(
-  classes = { JhipsterSampleApplicationApp.class, CucumberMocksConfiguration.class },
-  webEnvironment = WebEnvironment.RANDOM_PORT
-)
+@SpringBootTest(classes = { SampleApplicationApp.class, CucumberMocksConfiguration.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
 public class CucumberConfiguration {
 
   // other code omitted

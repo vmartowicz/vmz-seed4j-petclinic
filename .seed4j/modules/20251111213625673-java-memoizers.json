@@ -1,0 +1,16 @@
+{
+  "module": "java-memoizers",
+  "date": "2025-11-11T21:36:25.673093113Z",
+  "properties": {
+    "keycloakRealmName": "jhipetclinic",
+    "endOfLine": "lf",
+    "springConfigurationFormat": "yaml",
+    "packageName": "com.petclinic",
+    "projectName": "jhipetclinic",
+    "serverPort": 8080,
+    "indentSize": 2,
+    "keycloakClientScopeName": "jhipetclinic",
+    "nodePackageManager": "npm",
+    "baseName": "jhipetclinic"
+  }
+}
