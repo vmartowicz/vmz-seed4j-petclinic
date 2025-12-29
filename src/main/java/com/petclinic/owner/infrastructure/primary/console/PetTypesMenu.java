@@ -1,4 +1,4 @@
-package com.petclinic.owner.infrastructure.primary.cli;
+package com.petclinic.owner.infrastructure.primary.console;
 
 import com.petclinic.owner.application.PetTypesApplicationService;
 import com.petclinic.owner.domain.pettype.*;
@@ -6,17 +6,13 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.util.UUID;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
 
-@Component
-@Profile("cli")
-public class MenuPetTypes implements CommandLineRunner {
+public class PetTypesMenu implements CommandLineRunner {
 
   private final PetTypesApplicationService service;
   private final Scanner scanner = new Scanner(System.in);
 
-  public MenuPetTypes(PetTypesApplicationService service) {
+  public PetTypesMenu(PetTypesApplicationService service) {
     this.service = service;
   }
 

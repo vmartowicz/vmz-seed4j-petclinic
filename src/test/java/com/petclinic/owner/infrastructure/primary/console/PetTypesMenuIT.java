@@ -1,4 +1,4 @@
-package com.petclinic.owner.infrastructure.primary.cli;
+package com.petclinic.owner.infrastructure.primary.console;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -21,7 +21,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 
 @IntegrationTest
 @WithMockUser(value = "admin")
-class MenuPetTypesIT {
+class PetTypesMenuIT {
 
   @Autowired
   private PetTypesApplicationService service;
@@ -44,7 +44,7 @@ class MenuPetTypesIT {
     // Given
     String input = "1\nDog\n6\n"; // Choix 1 (Create), nom "Dog", puis 6 (Exit)
     System.setIn(new ByteArrayInputStream(input.getBytes()));
-    MenuPetTypes menu = new MenuPetTypes(service);
+    PetTypesMenu menu = new PetTypesMenu(service);
 
     // When
     menu.run();
@@ -59,7 +59,7 @@ class MenuPetTypesIT {
     String input = "1\n\n6\n"; // Choix 1, nom vide (erreur), puis 6 (Exit)
     System.setIn(new ByteArrayInputStream(input.getBytes()));
 
-    MenuPetTypes menu = new MenuPetTypes(service);
+    PetTypesMenu menu = new PetTypesMenu(service);
 
     // When
     menu.run();
@@ -78,7 +78,7 @@ class MenuPetTypesIT {
 
     String input = "2\n" + cat.id().id() + "\n6\n"; // Choix 2 (Find), UUID, puis 6 (Exit)
     System.setIn(new ByteArrayInputStream(input.getBytes()));
-    MenuPetTypes menu = new MenuPetTypes(service);
+    PetTypesMenu menu = new PetTypesMenu(service);
 
     // When
     menu.run();
@@ -96,7 +96,7 @@ class MenuPetTypesIT {
     System.setIn(new ByteArrayInputStream(input.getBytes()));
     String expectedPetType = "Warning : This Pet Type {" + petTypeId + "} doesn't exist !";
 
-    MenuPetTypes menu = new MenuPetTypes(service);
+    PetTypesMenu menu = new PetTypesMenu(service);
 
     // When
     menu.run();
@@ -111,7 +111,7 @@ class MenuPetTypesIT {
     String input = "2\ninvalid-uuid\n6\n"; // Choix 2, UUID invalide, puis 5 (Exit)
     System.setIn(new ByteArrayInputStream(input.getBytes()));
 
-    MenuPetTypes menu = new MenuPetTypes(service);
+    PetTypesMenu menu = new PetTypesMenu(service);
 
     // When
     menu.run();
@@ -139,7 +139,7 @@ class MenuPetTypesIT {
 
     String input = "3\n6\n"; // Choix 3 (FindAll), puis 6 (Exit)
     System.setIn(new ByteArrayInputStream(input.getBytes()));
-    MenuPetTypes menu = new MenuPetTypes(service);
+    PetTypesMenu menu = new PetTypesMenu(service);
 
     // When
     menu.run();
@@ -158,7 +158,7 @@ class MenuPetTypesIT {
     String input = "4\n" + bird.id().id() + "\nDog\n6\n";
     System.setIn(new ByteArrayInputStream(input.getBytes()));
 
-    MenuPetTypes menu = new MenuPetTypes(service);
+    PetTypesMenu menu = new PetTypesMenu(service);
 
     // When
     menu.run();
@@ -175,7 +175,7 @@ class MenuPetTypesIT {
     String input = "4\n" + bird.id().id() + "\n\n6\n";
     System.setIn(new ByteArrayInputStream(input.getBytes()));
 
-    MenuPetTypes menu = new MenuPetTypes(service);
+    PetTypesMenu menu = new PetTypesMenu(service);
 
     // When
     menu.run();
@@ -190,7 +190,7 @@ class MenuPetTypesIT {
     String input = "4\ne7e0199a-122e-4629-b6b0-af29fae38505\n\n6\n";
     System.setIn(new ByteArrayInputStream(input.getBytes()));
 
-    MenuPetTypes menu = new MenuPetTypes(service);
+    PetTypesMenu menu = new PetTypesMenu(service);
 
     // When
     menu.run();
@@ -208,7 +208,7 @@ class MenuPetTypesIT {
     String input = "5\n" + fish.id().id() + "\n6\n"; // Choix 5 (Delete), UUID, puis 6 (Exit)
     System.setIn(new ByteArrayInputStream(input.getBytes()));
 
-    MenuPetTypes menu = new MenuPetTypes(service);
+    PetTypesMenu menu = new PetTypesMenu(service);
 
     // When
     menu.run();
@@ -223,7 +223,7 @@ class MenuPetTypesIT {
     String input = "5\ne7e0199a-122e-4629-b6b0-af29fae38505\n6\n"; // Choix 5 (Delete), UUID, puis 6 (Exit)
     System.setIn(new ByteArrayInputStream(input.getBytes()));
 
-    MenuPetTypes menu = new MenuPetTypes(service);
+    PetTypesMenu menu = new PetTypesMenu(service);
 
     // When
     menu.run();
@@ -238,7 +238,7 @@ class MenuPetTypesIT {
     String input = "6\n"; // Exit immédiatement
     System.setIn(new ByteArrayInputStream(input.getBytes()));
 
-    MenuPetTypes menu = new MenuPetTypes(service);
+    PetTypesMenu menu = new PetTypesMenu(service);
 
     // When
     menu.run();
@@ -253,7 +253,7 @@ class MenuPetTypesIT {
     String input = "999\n6\n"; // Choix invalide, puis 5 (Exit)
     System.setIn(new ByteArrayInputStream(input.getBytes()));
 
-    MenuPetTypes menu = new MenuPetTypes(service);
+    PetTypesMenu menu = new PetTypesMenu(service);
 
     // When
     menu.run();
