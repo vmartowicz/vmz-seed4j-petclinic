@@ -1,4 +1,4 @@
-package com.petclinic.owner.infrastructure.primary.pettypes;
+package com.petclinic.owner.infrastructure.primary.rest.pettypes;
 
 import com.petclinic.owner.application.PetTypesApplicationService;
 import com.petclinic.owner.domain.pettype.PetTypeId;

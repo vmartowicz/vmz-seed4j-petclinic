@@ -1,4 +1,4 @@
-package com.petclinic.owner.infrastructure.primary.pettypes;
+package com.petclinic.owner.infrastructure.primary.rest.pettypes;
 
 import static com.petclinic.cucumber.rest.CucumberRestAssertions.assertThatLastResponse;
 

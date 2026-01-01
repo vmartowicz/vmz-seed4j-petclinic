@@ -1,4 +1,4 @@
-package com.petclinic.owner.infrastructure.primary.pettypes;
+package com.petclinic.owner.infrastructure.primary.rest.pettypes;
 
 import com.petclinic.owner.domain.pettype.PetTypes;
 import com.petclinic.shared.error.domain.Assert;

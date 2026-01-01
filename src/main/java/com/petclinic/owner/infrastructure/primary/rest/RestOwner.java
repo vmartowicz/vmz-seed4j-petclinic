@@ -1,4 +1,4 @@
-package com.petclinic.owner.infrastructure.primary;
+package com.petclinic.owner.infrastructure.primary.rest;
 
 import com.petclinic.owner.domain.Owner;
 import io.swagger.v3.oas.annotations.media.Schema;
