@@ -22,6 +22,14 @@ final class CliPetType {
     return new CliPetTypeBuilder().id(petType.id().get()).name(petType.name().get()).build();
   }
 
+  public UUID getId() {
+    return id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
   private static final class CliPetTypeBuilder {
 
     private UUID id;

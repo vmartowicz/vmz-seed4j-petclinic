@@ -5,129 +5,147 @@ import com.petclinic.owner.domain.pettype.*;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.UUID;
-import org.springframework.boot.CommandLineRunner;
 
-public class PetTypesMenu implements CommandLineRunner {
+public class PetTypesMenu extends AbstactMenu {
 
-  private final PetTypesApplicationService service;
-  private final Scanner scanner = new Scanner(System.in);
+  private static final String NAME = "Type d'animal";
 
-  public PetTypesMenu(PetTypesApplicationService service) {
-    this.service = service;
+  private final PetTypesApplicationService petTypeService;
+  private final Scanner scanner;
+
+  public PetTypesMenu(PetTypesApplicationService petTypeService, Scanner scanner) {
+    this.petTypeService = petTypeService;
+    this.scanner = scanner;
   }
 
-  @Override
-  public void run(String... args) {
-    while (true) {
-      System.out.println(
-        """
-        ==== PetStore PetType CLI ====
-        1. Create PetType
-        2. Find PetType
-        3. Find all PetType
-        4. Update PetType
-        5. Delete PetType
-        6. Exit
-        Enter your choice:
-        """
-      );
-      switch (scanner.nextLine()) {
-        case "1" -> createPetType();
-        case "2" -> findPetType();
-        case "3" -> findAllPetType();
-        case "4" -> updatePetType();
-        case "5" -> deletePetType();
-        case "6" -> {
-          return;
-        }
-        default -> System.out.println("Invalid choice.");
+  public void run() {
+    boolean running = true;
+    while (running) {
+      displayPetTypeMenu();
+      int choice = readInt(scanner, YOUR_CHOICE);
+
+      switch (choice) {
+        case 1 -> listAllPetTypes();
+        case 2 -> findPetTypeById();
+        case 3 -> createPetType();
+        case 4 -> updatePetType();
+        case 5 -> deletePetType();
+        case 0 -> running = false;
+        default -> displayInvalidChoice();
       }
     }
   }
 
+  private void displayPetTypeMenu() {
+    System.out.println("\n┌──────── 🐕 GESTION DES TYPES ANIMAUX ────────┐");
+    System.out.println("│                                              │");
+    System.out.println("│  1. 📋 Lister tous les types animaux         │");
+    System.out.println("│  2. 🔍 Rechercher par ID                     │");
+    System.out.println("│  3. ➕ Créer un nouveau type d'animal         │");
+    System.out.println("│  4. ✏️  Modifier un type                     │");
+    System.out.println("│  5. 🗑️  Supprimer un type                    │");
+    System.out.println("│  0. ⬅️  Retour au menu principal             │");
+    System.out.println("│                                        │");
+    System.out.println("└────────────────────────────────────────┘");
+  }
+
+  private void listAllPetTypes() {
+    System.out.println("\n📋 ═══════════ LISTE DES TYPES D'ANIMAUX ═══════════");
+    PetTypes petTypes = petTypeService.findAllPetTypes();
+
+    if (petTypes.pettypes().isEmpty()) {
+      displayNotFound(NAME);
+    } else {
+      displayAllPetTypes(petTypes);
+    }
+    System.out.println("═".repeat(55));
+    pressEnterToContinue(scanner);
+  }
+
+  private static void displayAllPetTypes(PetTypes petTypes) {
+    System.out.println();
+    System.out.printf("%-36s %-15s%n", "ID", "Nom");
+    System.out.println("─".repeat(55));
+    petTypes.pettypes().forEach(p -> System.out.printf("%-36s %-15s%n", p.id().get(), p.name()));
+  }
+
+  private void findPetTypeById() {
+    System.out.println("\n🔍 ═══════════ RECHERCHER UN TYPE ANIMAL ═══════════");
+    String id = readString(scanner, "ID du type d'animal: ");
+    Optional<PetType> petType = petTypeService.find(new PetTypeId(UUID.fromString(id)));
+
+    petType.ifPresentOrElse(p -> displayPetTypeDetails(CliPetType.from(p)), () -> displayNotFound(NAME, id));
+
+    pressEnterToContinue(scanner);
+  }
+
+  private void displayPetTypeDetails(CliPetType petType) {
+    System.out.println("\n┌─────────────────────────────────┐");
+    System.out.println("│     DÉTAILS DU TYPE D'ANIMAL         │");
+    System.out.println("├─────────────────────────────────┤");
+    System.out.printf("│ ID       : %-20s│%n", petType.getId());
+    System.out.printf("│ Nom      : %-20s│%n", petType.getName());
+    System.out.println("└─────────────────────────────────┘");
+  }
+
   private void createPetType() {
-    System.out.println("\n\n\t---   Create a Pet Type   ---");
-    System.out.println("\tUsage   : Name");
-    System.out.println("\tExample : Cat\n");
-    String[] parts = scanner.nextLine().split("-");
-
+    System.out.println("\n➕ ═══════════ CRÉER UN NOUVEAU TYPE D'ANIMAL ═══════════");
+    String name = readString(scanner, "Nom du type d'animal: ");
     try {
-      CliPetType petType = CliPetType.from(service.create(new PetTypeToCreate(new PetTypeName(parts[0]))));
-      System.out.println("\n\tInfo : PetType created. " + petType + "\nPress enter to continue...");
+      PetTypeToCreate petTypeToCreate = new PetTypeToCreate(new PetTypeName(name));
+      displayCreateSuccess(NAME);
+      displayPetTypeDetails(CliPetType.from(petTypeService.create(petTypeToCreate)));
     } catch (Exception e) {
-      System.out.println("\n\tError : Cannot create this Pet Type !!!\n\t" + e.getMessage());
+      displayCreateError(NAME, e);
     }
-  }
-
-  private void findPetType() {
-    System.out.println("\n\n\t---   Find a Pet Type   ---");
-    System.out.println("\tUsage : Pet Type Id\n");
-    String id = scanner.nextLine();
-    try {
-      Optional<PetType> petType = service.find(new PetTypeId(UUID.fromString(id)));
-      petType.ifPresentOrElse(
-        p -> {
-          System.out.println(CliPetType.from(p));
-          System.out.println("\n\tPress enter to continue...");
-        },
-        () -> System.out.println("\n\tWarning : This Pet Type {" + id + "} doesn't exist !")
-      );
-    } catch (Exception e) {
-      System.out.println("\n\tError : Cannot find this Pet Type {" + id + "}!!! \n\t" + e.getMessage());
-    }
-  }
-
-  private void findAllPetType() {
-    System.out.println("\n\n\t---   Find all Pet Types   ---");
-    try {
-      CliPetTypes petTypes = CliPetTypes.from(service.findAllPetTypes());
-      petTypes.getPettypes().forEach(System.out::println);
-      System.out.println("\n\tPress enter to continue...");
-    } catch (Exception e) {
-      System.out.println("\n\tError : Cannot find Pet Types !!! \n\t" + e.getMessage());
-    }
+    pressEnterToContinue(scanner);
   }
 
   private void updatePetType() {
-    System.out.println("\n\n\t---   Update a Pet Type   ---");
-    System.out.println("\tUsage : Pet Type Id\n");
-    String id = scanner.nextLine();
+    System.out.println("\n✏️  ═══════════ MODIFIER UN TYPE D'ANIMAL ═══════════");
 
-    try {
-      Optional<PetType> petType = service.find(new PetTypeId(UUID.fromString(id)));
+    String id = readString(scanner, "ID du type d'animal à modifier: ");
+    Optional<PetType> petType = petTypeService.find(new PetTypeId(UUID.fromString(id)));
 
-      petType.ifPresentOrElse(
-        p -> {
-          System.out.println(CliPetType.from(p));
-          String[] parts = scanner.nextLine().split("-");
-          CliPetType petTypeUpdated = CliPetType.from(
-            service.update(new PetTypeToUpdate(new PetTypeId(UUID.fromString(id)), new PetTypeName(parts[0])))
-          );
-          System.out.println("\n\tInfo : PetType updated " + petTypeUpdated + "\nPress enter to continue...");
-        },
-        () -> System.out.println("\n\tWarning : This Pet Type {" + id + "} doesn't exist !")
-      );
-    } catch (Exception e) {
-      System.out.println("\n\tError : Cannot find this Pet Id {" + id + "} !!! \n\t" + e.getMessage());
-    }
+    petType.ifPresentOrElse(
+      p -> {
+        System.out.println("\nAnimal actuel:");
+        displayPetTypeDetails(CliPetType.from(p));
+        System.out.println("\n--- Nouvelles valeurs (Entrée pour conserver) ---");
+        String name = readStringOrKeep(scanner, "Nouveau nom [" + p.name().name() + "]: ");
+        if (!name.isEmpty()) {
+          PetTypeToUpdate petTypeToUpdate = new PetTypeToUpdate(p.id(), new PetTypeName(name));
+          PetType petTypeUpdated = petTypeService.update(petTypeToUpdate);
+          System.out.println("\n✅ Type d'animal modifié avec succès !");
+          displayPetTypeDetails(CliPetType.from(petTypeUpdated));
+        }
+      },
+      () -> displayNotFound(NAME, id)
+    );
+    pressEnterToContinue(scanner);
   }
 
   private void deletePetType() {
-    System.out.println("\n\n\t---   Delete a Pet Type   ---");
-    System.out.println("\tUsage : Pet Type Id\n");
-    String id = scanner.nextLine();
-    try {
-      Optional<PetType> petType = service.find(new PetTypeId(UUID.fromString(id)));
-      petType.ifPresentOrElse(
-        p -> {
-          service.remove(new PetTypeId(UUID.fromString(id)));
-          System.out.println("PetType deleted.");
-          System.out.println("\n\tInfo : PetType {" + id + "} deleted. Press enter to continue...");
-        },
-        () -> System.out.println("\n\tWarning : This Pet Type {" + id + "} doesn't exist !")
-      );
-    } catch (Exception e) {
-      System.out.println("\n\tError : Cannot find this Pet Id {" + id + "} !!! \n\t" + e.getMessage());
-    }
+    System.out.println("\n🗑️  ═══════════ SUPPRIMER UN TYPE D'ANIMAL ═══════════");
+
+    String id = readString(scanner, "ID du type d'animal à supprimer: ");
+    Optional<PetType> petType = petTypeService.find(new PetTypeId(UUID.fromString(id)));
+
+    petType.ifPresentOrElse(
+      p -> {
+        displayPetTypeDetails(CliPetType.from(p));
+
+        String confirm = readString(scanner, "\n⚠️  Confirmer la suppression ? (oui/non): ");
+        if (confirm.equalsIgnoreCase("oui") || confirm.equalsIgnoreCase("o")) {
+          petTypeService.remove(new PetTypeId(UUID.fromString(id)));
+          displayDeleteSuccess(NAME);
+        } else {
+          displayDeleteCanceled();
+        }
+      },
+      () -> displayNoModelFound(NAME, id)
+    );
+
+    pressEnterToContinue(scanner);
   }
 }

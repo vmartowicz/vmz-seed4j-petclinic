@@ -1,6 +1,7 @@
 package com.petclinic.owner.infrastructure.secondary.repository.inmemory;
 
 import com.petclinic.owner.domain.pettype.*;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -10,7 +11,8 @@ public class PetTypeInMemoryRepository implements PetTypesRepository {
   private static final Map<PetTypeId, PetType> PET_TYPES = buildPetTypes();
 
   private static Map<PetTypeId, PetType> buildPetTypes() {
-    return Map.of(petTypeId(), petType());
+    //return new HashMap<>(Map.of(petTypeId(), petType()));
+    return new HashMap<>();
   }
 
   private static PetTypeId petTypeId() {
@@ -32,7 +34,8 @@ public class PetTypeInMemoryRepository implements PetTypesRepository {
 
   @Override
   public PetType save(PetType petType) {
-    return PET_TYPES.put(petType.id(), petType);
+    PET_TYPES.put(petType.id(), petType);
+    return petType;
   }
 
   @Override
