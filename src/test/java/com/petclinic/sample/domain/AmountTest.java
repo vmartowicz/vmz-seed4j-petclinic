@@ -1,6 +1,6 @@
 package com.petclinic.sample.domain;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import com.petclinic.UnitTest;
 import java.math.BigDecimal;

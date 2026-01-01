@@ -7,9 +7,11 @@ import com.petclinic.sample.domain.beer.Beers;
 import com.petclinic.sample.domain.beer.BeersRepository;
 import com.petclinic.shared.error.domain.Assert;
 import java.util.Optional;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@Primary
 class SpringDataBeersRepository implements BeersRepository {
 
   private final JpaBeersRepository beers;

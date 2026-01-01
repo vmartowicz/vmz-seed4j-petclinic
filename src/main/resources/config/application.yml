@@ -38,7 +38,7 @@ spring:
     hibernate:
       ddl-auto: none
       naming:
-        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        implicit-strategy: org.springframework.boot.hibernate.SpringImplicitNamingStrategy
         physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
     open-in-view: false
     properties:
@@ -58,25 +58,19 @@ spring:
     change-log: classpath:config/liquibase/master.xml
   jackson:
     default-property-inclusion: non_absent
-  security:
-    oauth2:
-      client:
-        provider:
-          oidc:
-            issuer-uri: http://localhost:9080/realms/jhipetclinic
-        registration:
-          oidc:
-            client-id: web_app
-            client-secret: web_app
-            scope: openid,profile,email
 management:
   endpoint:
     health:
+      access: read-only
       probes:
         enabled: true
       show-details: always
-      access: read-only
   endpoints:
+    access:
+      default: none
+    jmx:
+      exposure:
+        exclude: '*'
     web:
       base-path: /management
       exposure:
@@ -88,11 +82,6 @@ management:
           - logfile
           - loggers
           - threaddump
-    access:
-      default: none
-    jmx:
-      exposure:
-        exclude: '*'
   info:
     env:
       enabled: true
@@ -104,16 +93,10 @@ server:
   port: 8080
 application:
   security:
-    oauth2:
-      audience: account,api://default
+    jwt-base64-secret: NTRlMGNkMmQ3YjNjY2VkMGU4MTM0MGM0YjA3MzUxNmNiMTc5YThjYzc1YjhkMTFlYzAxOTU4MzBiOWMxMDE0YQ==
 springdoc:
   enable-native-support: true
   swagger-ui:
     operationsSorter: alpha
     tagsSorter: alpha
     tryItOutEnabled: true
-    oauth:
-      client-id: web_app
-      realm: jhipetclinic
-  oauth2:
-    authorization-url: http://localhost:9080/realms/jhipetclinic/protocol/openid-connect/auth

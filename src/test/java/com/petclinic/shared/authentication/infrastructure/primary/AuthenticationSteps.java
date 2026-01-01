@@ -1,68 +1,64 @@
 package com.petclinic.shared.authentication.infrastructure.primary;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import com.petclinic.cucumber.CucumberAuthenticationConfiguration;
+import com.petclinic.cucumber.rest.CucumberRestClient;
 import com.petclinic.shared.authentication.domain.Role;
 import io.cucumber.java.en.Given;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.springframework.boot.test.web.client.TestRestTemplate;
+import javax.crypto.SecretKey;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 
 public class AuthenticationSteps {
 
-  private static final Map<String, User> users = new UsersBuilder().add("admin", Role.ADMIN).add("user", Role.USER).build();
-  private final TestRestTemplate rest;
+  private final Map<String, User> users;
+  private final CucumberRestClient restClient;
 
-  AuthenticationSteps(TestRestTemplate rest) {
-    this.rest = rest;
+  AuthenticationSteps(JwtAuthenticationProperties properties, CucumberRestClient restClient) {
+    this.restClient = restClient;
+    users = new UsersBuilder(buildKey(properties)).add("admin", Role.ADMIN).add("user", Role.USER).build();
+  }
+
+  private SecretKey buildKey(JwtAuthenticationProperties properties) {
+    return Keys.hmacShaKeyFor(properties.getJwtBase64Secret().getBytes(StandardCharsets.UTF_8));
   }
 
   @Given("I am logged in as {string}")
   public void authenticateUser(String username) {
-    rest.getRestTemplate().setInterceptors(interceptorsWithAuthentication(username));
+    var userToAuthenticate = users.get(username);
+    assertThat(userToAuthenticate).as(unknownUserMessage(username)).isNotNull();
+    restClient.addRequestInterceptor(authenticateUserInterceptor(userToAuthenticate));
   }
 
-  private List<ClientHttpRequestInterceptor> interceptorsWithAuthentication(String user) {
-    List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>(rest.getRestTemplate().getInterceptors());
-
-    var userToAuthenticate = users.get(user);
-
-    assertThat(userToAuthenticate).as(unknownUserMessage(user)).isNotNull();
-
-    interceptors.add((request, body, execution) -> {
+  private static ClientHttpRequestInterceptor authenticateUserInterceptor(User userToAuthenticate) {
+    return (request, body, execution) -> {
       request.getHeaders().set(HttpHeaders.AUTHORIZATION, "Bearer " + userToAuthenticate.token());
 
       return execution.execute(request, body);
-    });
-
-    return interceptors;
+    };
   }
 
   @Given("I am logged out")
   public void logout() {
-    rest.getRestTemplate().setInterceptors(interceptorsWithoutAuthentication());
+    restClient.addRequestInterceptor(unauthenticateInterceptor());
   }
 
-  private List<ClientHttpRequestInterceptor> interceptorsWithoutAuthentication() {
-    List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>(rest.getRestTemplate().getInterceptors());
-
-    interceptors.add((request, body, execution) -> {
+  private static ClientHttpRequestInterceptor unauthenticateInterceptor() {
+    return (request, body, execution) -> {
       request.getHeaders().remove(HttpHeaders.AUTHORIZATION);
 
       return execution.execute(request, body);
-    });
-
-    return interceptors;
+    };
   }
 
   private String unknownUserMessage(String user) {
@@ -71,10 +67,15 @@ public class AuthenticationSteps {
 
   private static final class UsersBuilder {
 
-    private Map<String, User> users = new ConcurrentHashMap<>();
+    private final SecretKey key;
+    private final Map<String, User> users = new ConcurrentHashMap<>();
+
+    private UsersBuilder(SecretKey key) {
+      this.key = key;
+    }
 
     public UsersBuilder add(String username, Role... roles) {
-      users.put(username, new User(username, roles));
+      users.put(username, new User(key, username, roles));
 
       return this;
     }
@@ -86,17 +87,21 @@ public class AuthenticationSteps {
 
   private static class User {
 
-    private final Map<String, Object> claims;
+    private final SecretKey key;
+    private final String username;
+    private final String authorities;
 
-    public User(String username, Role[] roles) {
-      claims = Map.of("preferred_username", username, "roles", Stream.of(roles).map(Role::key).toList());
+    public User(SecretKey key, String username, Role[] roles) {
+      this.key = key;
+      this.username = username;
+      authorities = Stream.of(roles).map(Role::key).collect(Collectors.joining(","));
     }
 
     private String token() {
       return Jwts.builder()
-        .subject("authentication")
-        .signWith(CucumberAuthenticationConfiguration.JWT_KEY)
-        .claims(claims)
+        .subject(username)
+        .signWith(key)
+        .claim("auth", authorities)
         .expiration(Date.from(Instant.now().plusSeconds(300)))
         .compact();
     }

@@ -1,6 +1,6 @@
 package com.petclinic.sample.infrastructure.primary.beer;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import com.petclinic.JsonHelper;
 import com.petclinic.UnitTest;

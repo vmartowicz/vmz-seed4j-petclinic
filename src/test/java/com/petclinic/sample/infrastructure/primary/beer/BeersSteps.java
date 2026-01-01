@@ -1,8 +1,8 @@
 package com.petclinic.sample.infrastructure.primary.beer;
 
-import static com.petclinic.cucumber.rest.CucumberRestAssertions.*;
+import static com.petclinic.cucumber.rest.CucumberRestAssertions.assertThatLastResponse;
 
-import com.petclinic.cucumber.rest.CucumberRestTemplate;
+import com.petclinic.cucumber.rest.CucumberRestClient;
 import com.petclinic.cucumber.rest.CucumberRestTestContext;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -18,9 +18,9 @@ public class BeersSteps {
     }
     """;
 
-  private final CucumberRestTemplate rest;
+  private final CucumberRestClient rest;
 
-  BeersSteps(CucumberRestTemplate rest) {
+  BeersSteps(CucumberRestClient rest) {
     this.rest = rest;
   }
 

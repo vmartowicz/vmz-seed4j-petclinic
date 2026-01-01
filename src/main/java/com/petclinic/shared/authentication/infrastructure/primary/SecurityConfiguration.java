@@ -1,73 +1,67 @@
 package com.petclinic.shared.authentication.infrastructure.primary;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 import com.petclinic.shared.authentication.domain.Role;
-import com.petclinic.shared.generation.domain.ExcludeFromGeneratedCodeCoverage;
-import java.time.Duration;
-import java.util.HashSet;
-import java.util.Set;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import java.nio.charset.StandardCharsets;
+import javax.crypto.SecretKey;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.convert.converter.Converter;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
+import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
-import org.springframework.security.oauth2.core.OAuth2TokenValidator;
-import org.springframework.security.oauth2.core.oidc.user.OidcUserAuthority;
-import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtDecoders;
-import org.springframework.security.oauth2.jwt.JwtValidators;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
 import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
+@EnableConfigurationProperties(JwtAuthenticationProperties.class)
 @EnableMethodSecurity(securedEnabled = true)
 class SecurityConfiguration {
 
-  private static final int TIMEOUT = 2000;
-
-  private final ApplicationSecurityProperties applicationSecurityProperties;
+  private final JwtAuthenticationProperties properties;
   private final CorsFilter corsFilter;
 
-  @Value("${spring.security.oauth2.client.provider.oidc.issuer-uri}")
-  private String issuerUri;
-
-  public SecurityConfiguration(CorsFilter corsFilter, ApplicationSecurityProperties applicationSecurityProperties) {
+  public SecurityConfiguration(JwtAuthenticationProperties properties, CorsFilter corsFilter) {
+    this.properties = properties;
     this.corsFilter = corsFilter;
-    this.applicationSecurityProperties = applicationSecurityProperties;
   }
 
   @Bean
-  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
+
+  @Bean
+  public SecurityFilterChain filterChain(HttpSecurity http) {
     // @formatter:off
     return http
-      .csrf(AbstractHttpConfigurer::disable)
-      .addFilterBefore(corsFilter, CsrfFilter.class)
+      .csrf(CsrfConfigurer::disable)
+      .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
       .headers(headers -> headers
-        .contentSecurityPolicy(csp -> csp.policyDirectives(applicationSecurityProperties.getContentSecurityPolicy()))
-        .frameOptions(FrameOptionsConfig::sameOrigin)
+        .contentSecurityPolicy(csp -> csp.policyDirectives(properties.getContentSecurityPolicy()))
+        .frameOptions(FrameOptionsConfig::deny)
         .referrerPolicy(referrer -> referrer.policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN))
         .permissionsPolicyHeader(permissions ->
           permissions.policy("camera=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()"))
       )
+      .formLogin(FormLoginConfigurer::disable)
+      .httpBasic(HttpBasicConfigurer::disable)
+      .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
       .authorizeHttpRequests(authz -> authz
         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
         .requestMatchers("/app/**").permitAll()
@@ -78,7 +72,10 @@ class SecurityConfiguration {
         .requestMatchers("/v3/api-docs/**").permitAll()
         .requestMatchers("/test/**").permitAll()
         .requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/api/authenticate")).permitAll()
-        .requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/api/auth-info")).permitAll()
+        .requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/api/register")).permitAll()
+        .requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/api/activate")).permitAll()
+        .requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/api/account/reset-password/init")).permitAll()
+        .requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/api/account/reset-password/finish")).permitAll()
         .requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/api/admin/**")).hasAuthority(Role.ADMIN.key())
         .requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/api/**")).authenticated()
         .requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/management/health")).permitAll()
@@ -88,60 +85,18 @@ class SecurityConfiguration {
         .requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/management/**")).hasAuthority(Role.ADMIN.key())
         .anyRequest().authenticated()
       )
-      .oauth2Login(withDefaults())
-      .oauth2ResourceServer(oauth2 -> oauth2
-        .jwt(jwt -> jwt.jwtAuthenticationConverter(authenticationConverter()))
-      )
-      .oauth2Client(withDefaults())
+      .with(new JWTConfigurer(authenticationTokenReader()), Customizer.withDefaults())
       .build();
     // @formatter:on
   }
 
-  private Converter<Jwt, AbstractAuthenticationToken> authenticationConverter() {
-    JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
-    jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(new JwtGrantedAuthorityConverter());
-
-    return jwtAuthenticationConverter;
+  @Bean
+  @ConditionalOnMissingBean
+  AuthenticationTokenReader authenticationTokenReader() {
+    return new JwtReader(Jwts.parser().verifyWith(signingKey()).build());
   }
 
-  /**
-   * Map authorities from "groups" or "roles" claim in ID Token.
-   *
-   * @return a {@link GrantedAuthoritiesMapper} that maps groups from the IdP to Spring Security Authorities.
-   */
-  @Bean
-  public GrantedAuthoritiesMapper userAuthoritiesMapper() {
-    return authorities -> {
-      Set<GrantedAuthority> mappedAuthorities = new HashSet<>();
-
-      authorities.forEach(authority -> {
-        // Check for OidcUserAuthority because Spring Security 5.2 returns
-        // each scope as a GrantedAuthority, which we don't care about.
-        if (authority instanceof OidcUserAuthority oidcUserAuthority) {
-          mappedAuthorities.addAll(Claims.extractAuthorityFromClaims(oidcUserAuthority.getUserInfo().getClaims()));
-        }
-      });
-      return mappedAuthorities;
-    };
-  }
-
-  @Bean
-  @ExcludeFromGeneratedCodeCoverage(reason = "Only called with a valid client registration repository")
-  public JwtDecoder jwtDecoder(ClientRegistrationRepository clientRegistrationRepository, RestTemplateBuilder restTemplateBuilder) {
-    NimbusJwtDecoder jwtDecoder = JwtDecoders.fromOidcIssuerLocation(issuerUri);
-
-    OAuth2TokenValidator<Jwt> audienceValidator = new AudienceValidator(applicationSecurityProperties.getOauth2().getAudience());
-    OAuth2TokenValidator<Jwt> withIssuer = JwtValidators.createDefaultWithIssuer(issuerUri);
-    OAuth2TokenValidator<Jwt> withAudience = new DelegatingOAuth2TokenValidator<>(withIssuer, audienceValidator);
-
-    jwtDecoder.setJwtValidator(withAudience);
-    jwtDecoder.setClaimSetConverter(
-      new CustomClaimConverter(
-        clientRegistrationRepository.findByRegistrationId("oidc"),
-        restTemplateBuilder.connectTimeout(Duration.ofMillis(TIMEOUT)).readTimeout(Duration.ofMillis(TIMEOUT)).build()
-      )
-    );
-
-    return jwtDecoder;
+  private SecretKey signingKey() {
+    return Keys.hmacShaKeyFor(properties.getJwtBase64Secret().getBytes(StandardCharsets.UTF_8));
   }
 }

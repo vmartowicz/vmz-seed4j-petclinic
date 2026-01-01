@@ -1,6 +1,5 @@
 package com.petclinic;
 
-import com.petclinic.shared.authentication.infrastructure.primary.TestSecurityConfiguration;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -16,7 +15,7 @@ import org.springframework.test.context.ActiveProfiles;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @DisplayNameGeneration(ReplaceCamelCase.class)
-@SpringBootTest(classes = { JhipetclinicApp.class, TestSecurityConfiguration.class })
+@SpringBootTest(classes = { JhipetclinicApp.class })
 public @interface IntegrationTest {
   @AliasFor(annotation = SpringBootTest.class)
   String[] properties() default {};

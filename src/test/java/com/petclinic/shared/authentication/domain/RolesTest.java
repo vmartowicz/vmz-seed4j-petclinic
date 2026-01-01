@@ -1,6 +1,6 @@
 package com.petclinic.shared.authentication.domain;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import com.petclinic.UnitTest;
 import java.util.Set;

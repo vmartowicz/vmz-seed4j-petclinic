@@ -1,0 +1,14 @@
+{
+  "module": "ts-loader",
+  "date": "2026-01-01T22:30:25.431602659Z",
+  "properties": {
+    "packageName": "com.petclinic",
+    "projectName": "jhipetclinic",
+    "baseName": "jhipetclinic",
+    "nodePackageManager": "npm",
+    "serverPort": 8080,
+    "endOfLine": "lf",
+    "indentSize": 2,
+    "springConfigurationFormat": "yaml"
+  }
+}

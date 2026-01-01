@@ -1,7 +1,7 @@
 package com.petclinic.sample.infrastructure.primary.beer;
 
-import static com.petclinic.sample.domain.beer.BeersFixture.*;
-import static org.assertj.core.api.Assertions.*;
+import static com.petclinic.sample.domain.beer.BeersFixture.beer;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import com.petclinic.JsonHelper;
 import com.petclinic.UnitTest;
