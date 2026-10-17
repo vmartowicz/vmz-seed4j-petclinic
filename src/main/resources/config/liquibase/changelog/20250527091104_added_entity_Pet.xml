@@ -26,9 +26,9 @@
       <column name="owner_id" type="bigint">
         <constraints nullable="true" />
       </column>
-      <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+      <!-- seed4j-needle-liquibase-add-column - JHipster will add columns here -->
     </createTable>
   </changeSet>
 
-  <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+  <!-- seed4j-needle-liquibase-add-changeset - JHipster will add changesets here -->
 </databaseChangeLog>

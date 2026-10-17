@@ -26,5 +26,5 @@
   <include file="config/liquibase/changelog/20250527091102_added_entity_constraints_Vet.xml" relativeToChangelogFile="false" />
   <include file="config/liquibase/changelog/20250527091104_added_entity_constraints_Pet.xml" relativeToChangelogFile="false" />
   <include file="config/liquibase/changelog/20250527091105_added_entity_constraints_Visit.xml" relativeToChangelogFile="false" />
-  <!-- jhipster-needle-liquibase-add-changelog -->
+  <!-- seed4j-needle-liquibase-add-changelog -->
 </databaseChangeLog>
