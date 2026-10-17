@@ -2,7 +2,7 @@ package com.petclinic.owner.infrastructure.primary.rest.pettypes;
 
 import static com.petclinic.cucumber.rest.CucumberRestAssertions.assertThatLastResponse;
 
-import com.petclinic.cucumber.rest.CucumberRestTemplate;
+import com.petclinic.cucumber.rest.CucumberRestClient;
 import com.petclinic.cucumber.rest.CucumberRestTestContext;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -17,9 +17,9 @@ public class PetTypeSteps {
     }
     """;
 
-  private final CucumberRestTemplate rest;
+  private final CucumberRestClient rest;
 
-  PetTypeSteps(CucumberRestTemplate rest) {
+  PetTypeSteps(CucumberRestClient rest) {
     this.rest = rest;
   }
 

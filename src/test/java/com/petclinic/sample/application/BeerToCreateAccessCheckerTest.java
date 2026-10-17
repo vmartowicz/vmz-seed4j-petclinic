@@ -1,8 +1,8 @@
 package com.petclinic.sample.application;
 
-import static com.petclinic.sample.domain.beer.BeersFixture.*;
-import static com.petclinic.shared.kipe.application.TestAuthentications.*;
-import static org.assertj.core.api.Assertions.*;
+import static com.petclinic.sample.domain.beer.BeersFixture.beerToCreate;
+import static com.petclinic.shared.kipe.application.TestAuthentications.admin;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import com.petclinic.UnitTest;
 import com.petclinic.shared.kipe.application.AccessContext;

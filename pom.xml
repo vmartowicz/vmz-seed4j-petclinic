@@ -15,13 +15,6 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.junit</groupId>
-        <artifactId>junit-bom</artifactId>
-        <version>${junit-jupiter.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
         <groupId>org.jmolecules</groupId>
         <artifactId>jmolecules-bom</artifactId>
         <version>${jmolecules-bom.version}</version>
@@ -84,13 +77,8 @@
       <artifactId>spring-boot-starter-data-jpa</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.hibernate.orm</groupId>
-      <artifactId>hibernate-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.liquibase</groupId>
-      <artifactId>liquibase-core</artifactId>
-      <version>${liquibase.version}</version>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-liquibase</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -102,19 +90,28 @@
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
+      <artifactId>spring-boot-starter-webmvc</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-oauth2-client</artifactId>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt-api</artifactId>
+      <version>${json-web-token.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt-impl</artifactId>
+      <version>${json-web-token.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt-jackson</artifactId>
+      <version>${json-web-token.version}</version>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.springdoc</groupId>
@@ -150,6 +147,11 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-webmvc-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>io.cucumber</groupId>
       <artifactId>cucumber-junit-platform-engine</artifactId>
       <version>${cucumber.version}</version>
@@ -168,31 +170,18 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-resttestclient</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.junit.platform</groupId>
       <artifactId>junit-platform-suite</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.jsonwebtoken</groupId>
-      <artifactId>jjwt-api</artifactId>
-      <version>${json-web-token.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.jsonwebtoken</groupId>
-      <artifactId>jjwt-impl</artifactId>
-      <version>${json-web-token.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.jsonwebtoken</groupId>
-      <artifactId>jjwt-jackson</artifactId>
-      <version>${json-web-token.version}</version>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security-test</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -203,7 +192,6 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
     <maven.version>3.6.3</maven.version>
-    <junit-jupiter.version>6.0.0</junit-jupiter.version>
 
     <maven-enforcer-plugin.version>3.6.2</maven-enforcer-plugin.version>
     <compiler-plugin.version>3.14.1</compiler-plugin.version>
@@ -212,22 +200,21 @@
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
     <checkstyle.version>10.21.0</checkstyle.version>
     <jacoco.version>0.8.14</jacoco.version>
-    <jmolecules-bom.version>2023.3.4</jmolecules-bom.version>
-    <commons-lang3.version>3.19.0</commons-lang3.version>
+    <jmolecules-bom.version>2025.0.2</jmolecules-bom.version>
+    <commons-lang3.version>3.20.0</commons-lang3.version>
     <properties-maven-plugin.version>1.2.1</properties-maven-plugin.version>
-    <sonar-maven-plugin.version>5.2.0.4988</sonar-maven-plugin.version>
-    <spring-boot.version>3.5.7</spring-boot.version>
-    <testcontainers.version>2.0.1</testcontainers.version>
+    <sonar-maven-plugin.version>5.5.0.6356</sonar-maven-plugin.version>
+    <spring-boot.version>4.0.1</spring-boot.version>
+    <testcontainers.version>2.0.3</testcontainers.version>
     <archunit-junit5.version>1.4.1</archunit-junit5.version>
-    <liquibase.version>4.33.0</liquibase.version>
     <reflections.version>0.10.2</reflections.version>
-    <frontend-maven-plugin.version>1.15.4</frontend-maven-plugin.version>
-    <npm.version>11.6.2</npm.version>
-    <node.version>v24.11.0</node.version>
+    <frontend-maven-plugin.version>2.0.0</frontend-maven-plugin.version>
+    <npm.version>11.7.0</npm.version>
+    <node.version>v24.12.0</node.version>
     <git-commit-id-plugin.version>9.0.2</git-commit-id-plugin.version>
-    <cucumber.version>7.31.0</cucumber.version>
-    <springdoc-openapi.version>2.8.13</springdoc-openapi.version>
+    <cucumber.version>7.33.0</cucumber.version>
     <json-web-token.version>0.13.0</json-web-token.version>
+    <springdoc-openapi.version>3.0.0</springdoc-openapi.version>
   </properties>
 
   <build>

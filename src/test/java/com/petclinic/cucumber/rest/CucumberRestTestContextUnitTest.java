@@ -1,7 +1,8 @@
 package com.petclinic.cucumber.rest;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import com.petclinic.UnitTest;
 import java.io.ByteArrayInputStream;

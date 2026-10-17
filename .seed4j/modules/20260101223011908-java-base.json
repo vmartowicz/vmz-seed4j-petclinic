@@ -1,0 +1,14 @@
+{
+  "module": "java-base",
+  "date": "2026-01-01T22:30:11.908553627Z",
+  "properties": {
+    "packageName": "com.petclinic",
+    "projectName": "jhipetclinic",
+    "baseName": "jhipetclinic",
+    "nodePackageManager": "npm",
+    "serverPort": 8080,
+    "endOfLine": "lf",
+    "indentSize": 2,
+    "springConfigurationFormat": "yaml"
+  }
+}

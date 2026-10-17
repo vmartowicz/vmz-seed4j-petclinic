@@ -1,6 +1,7 @@
 package com.petclinic.shared.enumeration.domain;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.petclinic.UnitTest;
 import com.petclinic.shared.error.domain.MissingMandatoryValueException;

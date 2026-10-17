@@ -1,8 +1,9 @@
 package com.petclinic.sample.domain.beer;
 
-import static com.petclinic.sample.domain.BeersIdentityFixture.*;
-import static com.petclinic.sample.domain.beer.BeersFixture.*;
-import static org.assertj.core.api.Assertions.*;
+import static com.petclinic.sample.domain.BeersIdentityFixture.anteMeridiemId;
+import static com.petclinic.sample.domain.BeersIdentityFixture.anteMeridiemUnitPrice;
+import static com.petclinic.sample.domain.beer.BeersFixture.beer;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import com.petclinic.UnitTest;
 import java.util.List;

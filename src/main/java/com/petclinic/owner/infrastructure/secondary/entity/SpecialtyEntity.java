@@ -29,7 +29,7 @@ public class SpecialtyEntity {
   @JsonIgnoreProperties(value = { "specialties" }, allowSetters = true)
   private Set<VetEntity> vets = new HashSet<>();
 
-  // jhipster-needle-entity-add-field - JHipster will add fields here
+  // seed4j-needle-entity-add-field - JHipster will add fields here
 
   public Long getId() {
     return this.id;

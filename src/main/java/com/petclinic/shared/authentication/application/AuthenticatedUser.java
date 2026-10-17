@@ -4,7 +4,6 @@ import com.petclinic.shared.authentication.domain.Role;
 import com.petclinic.shared.authentication.domain.Roles;
 import com.petclinic.shared.authentication.domain.Username;
 import com.petclinic.shared.error.domain.Assert;
-import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -12,16 +11,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
 /**
  * This is a utility class to get authenticated user information
  */
 public final class AuthenticatedUser {
-
-  public static final String PREFERRED_USERNAME = "preferred_username";
 
   private AuthenticatedUser() {}
 
@@ -65,14 +59,6 @@ public final class AuthenticatedUser {
       return details.getUsername();
     }
 
-    if (authentication instanceof JwtAuthenticationToken token) {
-      return (String) token.getToken().getClaims().get(PREFERRED_USERNAME);
-    }
-
-    if (authentication.getPrincipal() instanceof DefaultOidcUser oidcUser) {
-      return (String) oidcUser.getAttributes().get(PREFERRED_USERNAME);
-    }
-
     if (authentication.getPrincipal() instanceof String principal) {
       return principal;
     }
@@ -92,29 +78,6 @@ public final class AuthenticatedUser {
   private static Function<Authentication, Roles> toRoles() {
     return authentication ->
       new Roles(authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).map(Role::from).collect(Collectors.toSet()));
-  }
-
-  /**
-   * Get the authenticated user token attributes
-   *
-   * @return The authenticated user token attributes
-   * @throws NotAuthenticatedUserException
-   *           if the user is not authenticated
-   * @throws UnknownAuthenticationException
-   *           if the authentication scheme is unknown
-   */
-  public static Map<String, Object> attributes() {
-    Authentication token = authentication().orElseThrow(NotAuthenticatedUserException::new);
-
-    if (token instanceof OAuth2AuthenticationToken oAuth2AuthenticationToken) {
-      return oAuth2AuthenticationToken.getPrincipal().getAttributes();
-    }
-
-    if (token instanceof JwtAuthenticationToken jwtAuthenticationToken) {
-      return jwtAuthenticationToken.getTokenAttributes();
-    }
-
-    throw new UnknownAuthenticationException();
   }
 
   private static Optional<Authentication> authentication() {
