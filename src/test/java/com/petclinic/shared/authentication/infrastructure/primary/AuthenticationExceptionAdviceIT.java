@@ -1,6 +1,6 @@
 package com.petclinic.shared.authentication.infrastructure.primary;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.petclinic.IntegrationTest;

@@ -1,7 +1,6 @@
 package com.petclinic;
 
-import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
-import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.*;
 
 import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
@@ -39,7 +38,13 @@ class HexagonalArchTest {
 
   // the empty package is related to: https://github.com/TNG/ArchUnit/issues/191#issuecomment-507964792
   private static final String[] vanillaPackages = new String[] { "java..", "" };
-  private static final String[] commonToolsAndUtilsPackages = new String[] { "org.apache.commons..", "org.jmolecules..", "org.slf4j.." };
+  private static final String[] commonToolsAndUtilsPackages = new String[] {
+    "org.apache.commons..",
+    "org.jmolecules..",
+    "org.jspecify.annotations..",
+    "org.slf4j..",
+    "com.uber.nullaway.annotations..",
+  };
 
   private static String[] buildPackagesPatterns(Collection<String> packages) {
     return packages
@@ -49,8 +54,8 @@ class HexagonalArchTest {
   }
 
   private static Collection<String> packagesWithAnnotation(Class<? extends Annotation> annotationClass) throws AssertionError {
-    try {
-      return Files.walk(rootPackagePath())
+    try (Stream<Path> files = Files.walk(rootPackagePath())) {
+      return files
         .filter(path -> path.toString().endsWith("package-info.java"))
         .map(toPackageName())
         .map(path -> path.replaceAll("[\\/]", "."))
@@ -66,7 +71,9 @@ class HexagonalArchTest {
   }
 
   private static Path rootPackagePath() {
-    return Stream.of(ROOT_PACKAGE.split("\\.")).map(Path::of).reduce(Path.of("src", "main", "java"), Path::resolve);
+    return Stream.of(ROOT_PACKAGE.split("\\."))
+      .map(Path::of)
+      .reduce(Path.of("src", "main", "java"), Path::resolve);
   }
 
   private static Function<Path, String> toPackageName() {
@@ -257,6 +264,12 @@ class HexagonalArchTest {
         .haveSimpleName("package-info")
         .and()
         .resideInAPackage(SHARED_PACKAGES)
+        .and()
+        .resideOutsideOfPackages(
+          ROOT_PACKAGE.concat(".shared..domain"),
+          ROOT_PACKAGE.concat(".shared..application"),
+          ROOT_PACKAGE.concat(".shared..infrastructure.*")
+        )
         .should()
         .beMetaAnnotatedWith(SharedKernel.class)
         .because(ROOT_PACKAGE + ".shared package should only contain shared kernels")

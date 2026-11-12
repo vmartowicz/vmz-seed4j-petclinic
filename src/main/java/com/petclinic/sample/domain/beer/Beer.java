@@ -4,6 +4,7 @@ import com.petclinic.sample.domain.Amount;
 import com.petclinic.sample.domain.BeerId;
 import com.petclinic.shared.error.domain.Assert;
 import java.math.BigDecimal;
+import org.jspecify.annotations.Nullable;
 
 public final class Beer {
 
@@ -14,19 +15,15 @@ public final class Beer {
   private BeerSellingState sellingState;
 
   private Beer(BeerBuilder builder) {
-    assertMandatoryFields(builder);
+    Assert.notNull("id", builder.id);
+    Assert.notNull("name", builder.name);
+    Assert.notNull("unitPrice", builder.unitPrice);
+    Assert.notNull("sellingState", builder.sellingState);
 
     id = builder.id;
     name = builder.name;
     unitPrice = builder.unitPrice;
     sellingState = builder.sellingState;
-  }
-
-  private void assertMandatoryFields(BeerBuilder builder) {
-    Assert.notNull("id", builder.id);
-    Assert.notNull("name", builder.name);
-    Assert.notNull("unitPrice", builder.unitPrice);
-    Assert.notNull("sellingState", builder.sellingState);
   }
 
   public static BeerIdBuilder builder() {
@@ -54,12 +51,13 @@ public final class Beer {
   }
 
   private static final class BeerBuilder
-    implements BeerIdBuilder, BeerNameBuilder, BeerUnitPriceBuilder, BeerSellStateBuilder, BeerOptionalBuilder {
+    implements BeerIdBuilder, BeerNameBuilder, BeerUnitPriceBuilder, BeerSellStateBuilder, BeerOptionalBuilder
+  {
 
-    private BeerId id;
-    private BeerName name;
-    private Amount unitPrice;
-    private BeerSellingState sellingState;
+    private @Nullable BeerId id;
+    private @Nullable BeerName name;
+    private @Nullable Amount unitPrice;
+    private @Nullable BeerSellingState sellingState;
 
     @Override
     public BeerNameBuilder id(BeerId id) {

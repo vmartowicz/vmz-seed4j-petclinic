@@ -5,7 +5,7 @@ import com.petclinic.shared.generation.domain.ExcludeFromGeneratedCodeCoverage;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class JhipetclinicPageable {
+public final class JhipetclinicPageable {
 
   private final int page;
   private final int pageSize;

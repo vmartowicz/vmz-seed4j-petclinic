@@ -1,6 +1,6 @@
 package com.petclinic.sample.infrastructure.primary.beer;
 
-import static com.petclinic.cucumber.rest.CucumberRestAssertions.assertThatLastResponse;
+import static com.petclinic.cucumber.rest.CucumberRestAssertions.*;
 
 import com.petclinic.cucumber.rest.CucumberRestClient;
 import com.petclinic.cucumber.rest.CucumberRestTestContext;
@@ -12,11 +12,11 @@ import java.util.Map;
 public class BeersSteps {
 
   private static final String ADD_BEER_TEMPLATE = """
-    {
-      "name": "{NAME}",
-      "unitPrice": {UNIT_PRICE}
-    }
-    """;
+  {
+    "name": "{NAME}",
+    "unitPrice": {UNIT_PRICE}
+  }
+  """;
 
   private final CucumberRestClient rest;
 

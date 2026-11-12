@@ -1,0 +1,14 @@
+{
+  "module": "jpa-postgresql",
+  "date": "2026-11-12T21:01:54.376562614Z",
+  "properties": {
+    "endOfLine": "lf",
+    "springConfigurationFormat": "yaml",
+    "packageName": "com.petclinic",
+    "projectName": "jhipetclinic",
+    "nodePackageManager": "npm",
+    "serverPort": 8080,
+    "indentSize": 2,
+    "baseName": "jhipetclinic"
+  }
+}

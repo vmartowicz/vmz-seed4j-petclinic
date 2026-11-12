@@ -20,6 +20,7 @@ spring:
         keep-alive: 10s
         max-size: 16
         queue-capacity: 100
+        core-size: 8
       thread-name-prefix: jhipetclinic-task-
     scheduling:
       pool:
@@ -93,7 +94,7 @@ server:
   port: 8080
 application:
   security:
-    jwt-base64-secret: NTRlMGNkMmQ3YjNjY2VkMGU4MTM0MGM0YjA3MzUxNmNiMTc5YThjYzc1YjhkMTFlYzAxOTU4MzBiOWMxMDE0YQ==
+    jwt-base64-secret: NDc1OGY1NTM3ZTMxZTliNDkyNDNmZDk0MTgyMjFjY2FmMjVkZTI2OWJmNzM0ZjFmNTRjMGIyZjg1NjdkNzUyYQ==
 springdoc:
   enable-native-support: true
   swagger-ui:

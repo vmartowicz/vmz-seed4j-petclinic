@@ -1,0 +1,14 @@
+{
+  "module": "jmolecules",
+  "date": "2026-11-12T21:00:39.805704255Z",
+  "properties": {
+    "endOfLine": "lf",
+    "springConfigurationFormat": "yaml",
+    "packageName": "com.petclinic",
+    "projectName": "jhipetclinic",
+    "nodePackageManager": "npm",
+    "serverPort": 8080,
+    "indentSize": 2,
+    "baseName": "jhipetclinic"
+  }
+}

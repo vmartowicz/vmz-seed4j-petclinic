@@ -1,0 +1,14 @@
+{
+  "module": "spring-boot-jwt",
+  "date": "2026-11-12T21:01:54.856335972Z",
+  "properties": {
+    "endOfLine": "lf",
+    "springConfigurationFormat": "yaml",
+    "packageName": "com.petclinic",
+    "projectName": "jhipetclinic",
+    "nodePackageManager": "npm",
+    "serverPort": 8080,
+    "indentSize": 2,
+    "baseName": "jhipetclinic"
+  }
+}

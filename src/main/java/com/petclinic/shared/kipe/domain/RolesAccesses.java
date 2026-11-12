@@ -17,7 +17,10 @@ public final class RolesAccesses {
   private final Map<Role, Accesses> roles;
 
   private RolesAccesses(RolesAccessesBuilder builder) {
-    roles = builder.roles.entrySet().stream().collect(Collectors.toUnmodifiableMap(Map.Entry::getKey, entry -> entry.getValue().build()));
+    roles = builder.roles
+      .entrySet()
+      .stream()
+      .collect(Collectors.toUnmodifiableMap(Map.Entry::getKey, entry -> entry.getValue().build()));
   }
 
   private RolesAccesses(Map<Role, Accesses> roles) {

@@ -81,7 +81,9 @@ Sometimes you may want to access the last response content without asserting it,
 
 ```java
 CucumberRestTestContext.getElement("$.path");
+
 CucumberRestTestContext.getElement("uri-path", "$.path");
+
 CucumberRestTestContext.countEntries("$.path");
 ```
 
@@ -93,7 +95,7 @@ Sometimes you have to validate the behavior of async operations. You can do:
 assertThatLastAsyncResponse().hasOkStatus();
 ```
 
-To have a default waiting time of 5 seconds or you can get a custom max with:
+To have a default waiting time of 4 seconds or you can get a custom max with:
 
 ```java
 assertThatLastAsyncResponse(Duration.ofSeconds(30)).hasOkStatus();

@@ -1,6 +1,6 @@
 package com.petclinic.shared.error.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 import com.petclinic.UnitTest;
 import org.junit.jupiter.api.Test;

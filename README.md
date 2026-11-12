@@ -24,11 +24,20 @@ npm install
 
 ## Local environment
 
+- [Local server](http://localhost:8080)
+- [Local API doc](http://localhost:8080/swagger-ui.html)
 
 <!-- seed4j-needle-localEnvironment -->
 
 ## Start up
 
+```bash
+./mvnw
+```
+
+```bash
+docker compose -f src/main/docker/postgresql.yml up -d
+```
 
 <!-- seed4j-needle-startupCommand -->
 
@@ -36,5 +45,18 @@ npm install
 
 - [Hexagonal architecture](documentation/hexagonal-architecture.md)
 - [Front hexagonal architecture](documentation/front-hexagonal-architecture.md)
+- [Package types](documentation/package-types.md)
+- [Assertions](documentation/assertions.md)
+- [sonar](documentation/sonar.md)
+- [Vue](documentation/vue.md)
+- [PostgreSQL](documentation/postgresql.md)
+- [Logs Spy](documentation/logs-spy.md)
+- [Dev tools](documentation/dev-tools.md)
+- [CORS configuration](documentation/cors-configuration.md)
+- [Cucumber](documentation/cucumber.md)
+- [Kipe authorization](documentation/kipe-authorization.md)
+- [Kipe expression](documentation/kipe-expression.md)
+- [Cucumber authentication](documentation/cucumber-authentication.md)
+- [Sample](documentation/sample.md)
 
 <!-- seed4j-needle-documentation -->

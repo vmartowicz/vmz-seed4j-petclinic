@@ -1,6 +1,7 @@
 package com.petclinic.shared.kipe.application;
 
 import com.petclinic.shared.generation.domain.ExcludeFromGeneratedCodeCoverage;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -20,7 +21,7 @@ class ObjectAccessChecker implements AccessChecker<Object> {
     return false;
   }
 
-  private String getElementClass(Object item) {
+  private String getElementClass(@Nullable Object item) {
     if (item == null) {
       return "unknown";
     }

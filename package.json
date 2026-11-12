@@ -4,15 +4,71 @@
   "private": true,
   "description": "jhipetclinic",
   "license": "UNLICENSED",
+  "type": "module",
+  "scripts": {
+    "build": "npm-run-all build:*",
+    "build:tsc": "vue-tsc -p tsconfig.build.json --noEmit",
+    "build:vite": "vite build --emptyOutDir",
+    "dev": "npm-run-all --parallel dev:*",
+    "dev:vite": "vite",
+    "lint": "eslint .",
+    "prepare": "husky",
+    "prettier:check": "prettier --check .",
+    "prettier:format": "prettier --write .",
+    "preview": "vite preview",
+    "start": "vite",
+    "test": "npm run watch:test",
+    "test:component": "concurrently -k -s first -n dev,test \"npm run dev\" \"wait-on http://localhost:9000 && cypress open --e2e --config-file src/test/webapp/component/cypress-config.ts\"",
+    "test:component:headless": "concurrently -k -s first -n dev,test \"npm run dev\" \"wait-on http://localhost:9000 && cypress run --headless --config-file src/test/webapp/component/cypress-config.ts\"",
+    "test:coverage": "vitest run --coverage",
+    "watch": "npm-run-all --parallel watch:*",
+    "watch:test": "vitest --",
+    "watch:tsc": "npm run build:tsc -- --watch"
+  },
+  "allowScripts": {
+    "cypress": true
+  },
+  "dependencies": {
+    "axios": "1.21.0",
+    "piqure": "2.3.0",
+    "vue": "3.5.45",
+    "vue-router": "5.4.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@prettier/plugin-xml": "3.4.2",
+    "@typescript-eslint/eslint-plugin": "8.72.1",
+    "@typescript-eslint/parser": "8.72.1",
+    "@vitejs/plugin-vue": "6.0.10",
+    "@vitest/coverage-istanbul": "5.1.0",
+    "@vue/test-utils": "2.5.1",
+    "@vue/tsconfig": "0.9.1",
+    "concurrently": "10.0.7",
+    "cypress": "16.2.1",
+    "eslint": "10.14.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-cypress": "7.0.4",
+    "eslint-plugin-vue": "10.12.0",
+    "globals": "17.14.0",
+    "husky": "9.1.7",
+    "jsdom": "31.0.0",
+    "lint-staged": "17.6.0",
+    "npm-run-all2": "9.0.4",
+    "prettier": "3.9.10",
+    "prettier-plugin-gherkin": "4.0.0",
+    "prettier-plugin-java": "2.11.0",
+    "prettier-plugin-organize-imports": "4.3.0",
+    "prettier-plugin-packagejson": "3.1.0",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.1",
+    "vite": "8.3.6",
+    "vitest": "5.1.0",
+    "vitest-sonar-reporter": "3.0.0",
+    "vue-tsc": "3.3.14",
+    "wait-on": "9.5.1"
+  },
   "packageManager": "npm@12.2.2",
   "engines": {
     "node": ">=26"
-  },
-  "scripts": {
-    "prepare": "husky"
-  },
-  "devDependencies": {
-    "husky": "9.1.7",
-    "lint-staged": "17.6.0"
   }
 }

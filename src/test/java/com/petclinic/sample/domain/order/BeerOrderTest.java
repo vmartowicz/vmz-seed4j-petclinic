@@ -1,8 +1,7 @@
 package com.petclinic.sample.domain.order;
 
 import static com.petclinic.sample.domain.order.BeerOrderFixture.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 import com.petclinic.UnitTest;
 import com.petclinic.sample.domain.Amount;

@@ -1,6 +1,6 @@
 package com.petclinic.sample.domain.beer;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 import com.petclinic.UnitTest;
 import com.petclinic.sample.domain.BeersIdentityFixture;
