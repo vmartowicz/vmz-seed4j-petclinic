@@ -1,7 +1,12 @@
 package com.petclinic.sample.application;
 
 import com.petclinic.sample.domain.BeerId;
-import com.petclinic.sample.domain.beer.*;
+import com.petclinic.sample.domain.beer.Beer;
+import com.petclinic.sample.domain.beer.BeerToCreate;
+import com.petclinic.sample.domain.beer.Beers;
+import com.petclinic.sample.domain.beer.BeersCreator;
+import com.petclinic.sample.domain.beer.BeersRemover;
+import com.petclinic.sample.domain.beer.BeersRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 

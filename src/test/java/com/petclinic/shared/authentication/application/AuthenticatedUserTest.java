@@ -1,8 +1,7 @@
 package com.petclinic.shared.authentication.application;
 
 import static com.petclinic.shared.authentication.application.AuthenticatedUser.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 import com.petclinic.UnitTest;
 import com.petclinic.shared.authentication.domain.Role;
@@ -10,7 +9,11 @@ import com.petclinic.shared.authentication.domain.Username;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;

@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
 import java.math.BigDecimal;
 import java.util.UUID;
+import org.jspecify.annotations.Nullable;
 
 @Schema(name = "beer", description = "A beer")
 final class RestBeer {
@@ -15,6 +16,10 @@ final class RestBeer {
   private final BigDecimal unitPrice;
 
   private RestBeer(RestBeerBuilder builder) {
+    Assert.notNull("id", builder.id);
+    Assert.notNull("name", builder.name);
+    Assert.notNull("unitPrice", builder.unitPrice);
+
     id = builder.id;
     name = builder.name;
     unitPrice = builder.unitPrice;
@@ -43,29 +48,29 @@ final class RestBeer {
 
   private static final class RestBeerBuilder {
 
-    private UUID id;
-    private String name;
-    private BigDecimal unitPrice;
+    private @Nullable UUID id;
+    private @Nullable String name;
+    private @Nullable BigDecimal unitPrice;
 
-    public RestBeerBuilder id(UUID id) {
+    private RestBeerBuilder id(UUID id) {
       this.id = id;
 
       return this;
     }
 
-    public RestBeerBuilder name(String name) {
+    private RestBeerBuilder name(String name) {
       this.name = name;
 
       return this;
     }
 
-    public RestBeerBuilder unitPrice(BigDecimal unitPrice) {
+    private RestBeerBuilder unitPrice(BigDecimal unitPrice) {
       this.unitPrice = unitPrice;
 
       return this;
     }
 
-    public RestBeer build() {
+    private RestBeer build() {
       return new RestBeer(this);
     }
   }

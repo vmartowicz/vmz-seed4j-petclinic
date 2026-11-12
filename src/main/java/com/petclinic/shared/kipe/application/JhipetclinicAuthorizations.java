@@ -4,6 +4,7 @@ import com.petclinic.shared.authentication.application.AuthenticatedUser;
 import com.petclinic.shared.authentication.domain.Role;
 import com.petclinic.shared.authentication.domain.Roles;
 import com.petclinic.shared.authentication.domain.Username;
+import com.petclinic.shared.error.domain.Assert;
 import com.petclinic.shared.kipe.domain.Action;
 import com.petclinic.shared.kipe.domain.Resource;
 import com.petclinic.shared.kipe.domain.RolesAccesses;
@@ -33,7 +34,10 @@ public class JhipetclinicAuthorizations {
   }
 
   public Username getUsername(Authentication authentication) {
-    return new Username(AuthenticatedUser.readPrincipal(authentication));
+    String principal = AuthenticatedUser.readPrincipal(authentication);
+    Assert.notNull("principal", principal);
+
+    return new Username(principal);
   }
 
   public boolean specificAuthorized(Authentication authentication, String action, Resource resource) {

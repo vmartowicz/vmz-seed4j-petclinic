@@ -1,6 +1,7 @@
 package com.petclinic.shared.error.domain;
 
 import java.time.Instant;
+import org.jspecify.annotations.Nullable;
 
 public final class NotBeforeTimeException extends AssertionException {
 
@@ -22,12 +23,13 @@ public final class NotBeforeTimeException extends AssertionException {
   }
 
   public static final class NotBeforeTimeExceptionBuilder
-    implements NotBeforeTimeExceptionValueBuilder, NotBeforeTimeExceptionFieldBuilder, NotBeforeTimeExceptionOtherBuilder {
+    implements NotBeforeTimeExceptionValueBuilder, NotBeforeTimeExceptionFieldBuilder, NotBeforeTimeExceptionOtherBuilder
+  {
 
     private final String hint;
-    private Instant value;
-    private String field;
-    private Instant other;
+    private @Nullable Instant value;
+    private @Nullable String field;
+    private @Nullable Instant other;
 
     private NotBeforeTimeExceptionBuilder(String hint) {
       this.hint = hint;
@@ -55,6 +57,8 @@ public final class NotBeforeTimeException extends AssertionException {
     }
 
     private NotBeforeTimeException build() {
+      Assert.notNull("field", field);
+
       return new NotBeforeTimeException(field, message());
     }
 

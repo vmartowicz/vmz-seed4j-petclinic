@@ -8,12 +8,14 @@ import java.util.function.Supplier;
 
 public final class Memoizers {
 
+  private static final Object NO_INPUT = new Object();
+
   private Memoizers() {}
 
   public static <Result> Supplier<Result> of(Supplier<Result> supplier) {
     Assert.notNull("supplier", supplier);
 
-    return () -> of(_ -> supplier.get()).apply(null);
+    return () -> of(_ -> supplier.get()).apply(NO_INPUT);
   }
 
   public static <Input, Result> Function<Input, Result> of(Function<Input, Result> function) {

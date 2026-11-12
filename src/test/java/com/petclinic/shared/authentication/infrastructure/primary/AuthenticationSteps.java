@@ -1,6 +1,6 @@
 package com.petclinic.shared.authentication.infrastructure.primary;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 import com.petclinic.cucumber.rest.CucumberRestClient;
 import com.petclinic.shared.authentication.domain.Role;
@@ -30,7 +30,7 @@ public class AuthenticationSteps {
   }
 
   private SecretKey buildKey(JwtAuthenticationProperties properties) {
-    return Keys.hmacShaKeyFor(properties.getJwtBase64Secret().getBytes(StandardCharsets.UTF_8));
+    return Keys.hmacShaKeyFor(properties.jwtBase64Secret().getBytes(StandardCharsets.UTF_8));
   }
 
   @Given("I am logged in as {string}")
@@ -74,24 +74,24 @@ public class AuthenticationSteps {
       this.key = key;
     }
 
-    public UsersBuilder add(String username, Role... roles) {
+    private UsersBuilder add(String username, Role... roles) {
       users.put(username, new User(key, username, roles));
 
       return this;
     }
 
-    public Map<String, User> build() {
+    private Map<String, User> build() {
       return Collections.unmodifiableMap(users);
     }
   }
 
-  private static class User {
+  private static final class User {
 
     private final SecretKey key;
     private final String username;
     private final String authorities;
 
-    public User(SecretKey key, String username, Role[] roles) {
+    private User(SecretKey key, String username, Role[] roles) {
       this.key = key;
       this.username = username;
       authorities = Stream.of(roles).map(Role::key).collect(Collectors.joining(","));

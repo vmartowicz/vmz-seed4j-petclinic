@@ -2,6 +2,7 @@ package com.petclinic.shared.kipe.application;
 
 import com.petclinic.shared.error.domain.Assert;
 import com.petclinic.shared.generation.domain.ExcludeFromGeneratedCodeCoverage;
+import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.Authentication;
 
 @ExcludeFromGeneratedCodeCoverage(reason = "Untested null object structure")
@@ -12,7 +13,7 @@ record NullElementAccessContext<T>(Authentication authentication, String action)
   }
 
   @Override
-  public T element() {
+  public @Nullable T element() {
     return null;
   }
 }

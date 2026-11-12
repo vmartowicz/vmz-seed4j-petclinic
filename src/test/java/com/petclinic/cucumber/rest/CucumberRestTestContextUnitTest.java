@@ -1,8 +1,8 @@
 package com.petclinic.cucumber.rest;
 
+import static java.nio.charset.StandardCharsets.*;
 import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import com.petclinic.UnitTest;
 import java.io.ByteArrayInputStream;
@@ -98,7 +98,7 @@ class CucumberRestTestContextUnitTest {
     }
 
     assertThatThrownBy(() ->
-      CucumberRestTestContext.addResponse(mockedRequest("/"), httpResponse, mock(ClientHttpRequestExecution.class), "body".getBytes())
+      CucumberRestTestContext.addResponse(mockedRequest("/"), httpResponse, mock(ClientHttpRequestExecution.class), "body".getBytes(UTF_8))
     ).isExactlyInstanceOf(AssertionError.class);
   }
 
@@ -112,14 +112,14 @@ class CucumberRestTestContextUnitTest {
       fail(e.getMessage());
     }
 
-    CucumberRestTestContext.addResponse(mockedRequest("/"), httpResponse, mock(ClientHttpRequestExecution.class), "body".getBytes());
+    CucumberRestTestContext.addResponse(mockedRequest("/"), httpResponse, mock(ClientHttpRequestExecution.class), "body".getBytes(UTF_8));
 
     assertThat(CucumberRestTestContext.getResponse()).isEmpty();
   }
 
   @Test
   void shouldGracefullyHandleRetryErrors() throws IOException {
-    byte[] body = "body".getBytes();
+    byte[] body = "body".getBytes(UTF_8);
 
     ClientHttpRequestExecution execution = mock(ClientHttpRequestExecution.class);
     HttpRequest request = mockedRequest("/");
@@ -137,7 +137,7 @@ class CucumberRestTestContextUnitTest {
   private void addQuery(String path, String response) {
     ClientHttpResponse httpResponse = mockedResponse(response);
 
-    CucumberRestTestContext.addResponse(mockedRequest(path), httpResponse, mock(ClientHttpRequestExecution.class), "body".getBytes());
+    CucumberRestTestContext.addResponse(mockedRequest(path), httpResponse, mock(ClientHttpRequestExecution.class), "body".getBytes(UTF_8));
   }
 
   private ClientHttpResponse mockedResponse(String response) {
@@ -145,7 +145,7 @@ class CucumberRestTestContextUnitTest {
 
     try {
       when(httpResponse.getStatusCode()).thenReturn(HttpStatus.OK);
-      when(httpResponse.getBody()).thenReturn(new ByteArrayInputStream(response.getBytes()));
+      when(httpResponse.getBody()).thenReturn(new ByteArrayInputStream(response.getBytes(UTF_8)));
     } catch (IOException e) {
       fail(e.getMessage());
     }
