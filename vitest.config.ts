@@ -1,12 +1,16 @@
 /// <reference types="vitest" />
 
 import vue from '@vitejs/plugin-vue';
+import { fileURLToPath, URL } from 'node:url';
 import { configDefaults, defineConfig } from 'vitest/config';
 
 export default defineConfig({
   plugins: [vue()],
   resolve: {
     tsconfigPaths: true,
+    alias: {
+      '@': fileURLToPath(new URL('./src/main/webapp/app', import.meta.url)),
+    },
   },
   test: {
     reporters: ['verbose', 'vitest-sonar-reporter'],

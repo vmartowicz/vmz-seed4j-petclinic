@@ -1,7 +1,8 @@
 import { provide } from '@/injections';
 import { OWNERS_REPOSITORY } from '@/owner/application/OwnersKeys';
-import { InMemoryOwnersRepository } from '@/owner/infrastrucure/secondary/InMemoryOwnersRepository';
+import { RestOwnersRepository } from '@/owner/infrastructure/secondary/RestOwnersRepository';
+import type { AxiosHttp } from '@/shared/http/infrastructure/secondary/AxiosHttp';
 
-export const providerForOwners = (): void => {
-  provide(OWNERS_REPOSITORY, new InMemoryOwnersRepository());
+export const provideForOwners = (axios: AxiosHttp): void => {
+  provide(OWNERS_REPOSITORY, new RestOwnersRepository(axios));
 };

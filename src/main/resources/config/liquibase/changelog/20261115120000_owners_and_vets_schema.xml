@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
+>
+  <!-- Legacy tables (bigint ids) replaced by the UUID based schema below -->
+  <changeSet id="20261115120000-drop-legacy-visits" author="petclinic">
+    <preConditions onFail="MARK_RAN">
+      <tableExists tableName="visits" />
+    </preConditions>
+    <dropTable tableName="visits" cascadeConstraints="true" />
+  </changeSet>
+
+  <changeSet id="20261115120000-drop-legacy-pets" author="petclinic">
+    <preConditions onFail="MARK_RAN">
+      <tableExists tableName="pets" />
+    </preConditions>
+    <dropTable tableName="pets" cascadeConstraints="true" />
+  </changeSet>
+
+  <changeSet id="20261115120000-drop-legacy-owners" author="petclinic">
+    <preConditions onFail="MARK_RAN">
+      <tableExists tableName="owners" />
+    </preConditions>
+    <dropTable tableName="owners" cascadeConstraints="true" />
+  </changeSet>
+
+  <changeSet id="20261115120000-drop-legacy-rel_vets__specialties" author="petclinic">
+    <preConditions onFail="MARK_RAN">
+      <tableExists tableName="rel_vets__specialties" />
+    </preConditions>
+    <dropTable tableName="rel_vets__specialties" cascadeConstraints="true" />
+  </changeSet>
+
+  <changeSet id="20261115120000-drop-legacy-vets" author="petclinic">
+    <preConditions onFail="MARK_RAN">
+      <tableExists tableName="vets" />
+    </preConditions>
+    <dropTable tableName="vets" cascadeConstraints="true" />
+  </changeSet>
+
+  <changeSet id="20261115120000-drop-legacy-specialties" author="petclinic">
+    <preConditions onFail="MARK_RAN">
+      <tableExists tableName="specialties" />
+    </preConditions>
+    <dropTable tableName="specialties" cascadeConstraints="true" />
+  </changeSet>
+
+  <changeSet id="20261115120000-drop-legacy-types" author="petclinic">
+    <preConditions onFail="MARK_RAN">
+      <tableExists tableName="types" />
+    </preConditions>
+    <dropTable tableName="types" cascadeConstraints="true" />
+  </changeSet>
+
+  <changeSet id="20261115120000-owners" author="petclinic">
+    <createTable tableName="owners">
+      <column name="id" type="${uuidType}">
+        <constraints primaryKey="true" nullable="false" />
+      </column>
+      <column name="first_name" type="varchar(30)">
+        <constraints nullable="false" />
+      </column>
+      <column name="last_name" type="varchar(30)">
+        <constraints nullable="false" />
+      </column>
+      <column name="address" type="varchar(255)">
+        <constraints nullable="false" />
+      </column>
+      <column name="city" type="varchar(80)">
+        <constraints nullable="false" />
+      </column>
+      <column name="telephone" type="varchar(10)">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+    <createIndex tableName="owners" indexName="idx_owners_last_name">
+      <column name="last_name" />
+    </createIndex>
+
+    <createTable tableName="pets">
+      <column name="id" type="${uuidType}">
+        <constraints primaryKey="true" nullable="false" />
+      </column>
+      <column name="name" type="varchar(30)">
+        <constraints nullable="false" />
+      </column>
+      <column name="birth_date" type="date">
+        <constraints nullable="false" />
+      </column>
+      <column name="type" type="varchar(20)">
+        <constraints nullable="false" />
+      </column>
+      <column name="owner_id" type="${uuidType}">
+        <constraints nullable="false" foreignKeyName="fk_pets_owner" references="owners(id)" />
+      </column>
+    </createTable>
+
+    <createTable tableName="visits">
+      <column name="id" type="${uuidType}">
+        <constraints primaryKey="true" nullable="false" />
+      </column>
+      <column name="visit_date" type="date">
+        <constraints nullable="false" />
+      </column>
+      <column name="description" type="varchar(255)">
+        <constraints nullable="false" />
+      </column>
+      <column name="pet_id" type="${uuidType}">
+        <constraints nullable="false" foreignKeyName="fk_visits_pet" references="pets(id)" />
+      </column>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="20261115120000-vets" author="petclinic">
+    <createTable tableName="vets">
+      <column name="id" type="${uuidType}">
+        <constraints primaryKey="true" nullable="false" />
+      </column>
+      <column name="first_name" type="varchar(30)">
+        <constraints nullable="false" />
+      </column>
+      <column name="last_name" type="varchar(30)">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+
+    <createTable tableName="vet_specialties">
+      <column name="vet_id" type="${uuidType}">
+        <constraints nullable="false" foreignKeyName="fk_vet_specialties_vet" references="vets(id)" />
+      </column>
+      <column name="specialty" type="varchar(20)">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+    <addPrimaryKey tableName="vet_specialties" columnNames="vet_id, specialty" />
+  </changeSet>
+</databaseChangeLog>
