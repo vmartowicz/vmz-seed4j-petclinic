@@ -3,6 +3,7 @@ package com.petclinic.shared.authentication.infrastructure.primary;
 import com.petclinic.shared.authentication.domain.Role;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.DispatcherType;
 import java.nio.charset.StandardCharsets;
 import javax.crypto.SecretKey;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -64,6 +65,9 @@ class SecurityConfiguration {
       .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
       .authorizeHttpRequests(authz -> authz
         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+        .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
+        .requestMatchers(HttpMethod.GET, "/", "/index.html", "/favicon.ico", "/assets/**").permitAll()
+        .requestMatchers(HttpMethod.GET, "/home", "/owners", "/owners/**", "/vets").permitAll()
         .requestMatchers("/app/**").permitAll()
         .requestMatchers("/i18n/**").permitAll()
         .requestMatchers("/content/**").permitAll()
@@ -76,6 +80,10 @@ class SecurityConfiguration {
         .requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/api/activate")).permitAll()
         .requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/api/account/reset-password/init")).permitAll()
         .requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/api/account/reset-password/finish")).permitAll()
+        .requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/api/owners")).permitAll()
+        .requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/api/owners/**")).permitAll()
+        .requestMatchers(PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/api/vets")).permitAll()
+        .requestMatchers(PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/api/pet-types")).permitAll()
         .requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/api/admin/**")).hasAuthority(Role.ADMIN.key())
         .requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/api/**")).authenticated()
         .requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/management/health")).permitAll()

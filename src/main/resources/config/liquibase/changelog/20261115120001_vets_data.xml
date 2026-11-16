@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
+>
+  <changeSet id="20261115120001-vets-data" author="petclinic">
+    <insert tableName="vets">
+      <column name="id" value="00000000-0000-4000-8000-000000000001" />
+      <column name="first_name" value="James" />
+      <column name="last_name" value="Carter" />
+    </insert>
+    <insert tableName="vets">
+      <column name="id" value="00000000-0000-4000-8000-000000000002" />
+      <column name="first_name" value="Helen" />
+      <column name="last_name" value="Leary" />
+    </insert>
+    <insert tableName="vets">
+      <column name="id" value="00000000-0000-4000-8000-000000000003" />
+      <column name="first_name" value="Linda" />
+      <column name="last_name" value="Douglas" />
+    </insert>
+    <insert tableName="vets">
+      <column name="id" value="00000000-0000-4000-8000-000000000004" />
+      <column name="first_name" value="Rafael" />
+      <column name="last_name" value="Ortega" />
+    </insert>
+    <insert tableName="vets">
+      <column name="id" value="00000000-0000-4000-8000-000000000005" />
+      <column name="first_name" value="Henry" />
+      <column name="last_name" value="Stevens" />
+    </insert>
+    <insert tableName="vets">
+      <column name="id" value="00000000-0000-4000-8000-000000000006" />
+      <column name="first_name" value="Sharon" />
+      <column name="last_name" value="Jenkins" />
+    </insert>
+    <insert tableName="vet_specialties">
+      <column name="vet_id" value="00000000-0000-4000-8000-000000000002" />
+      <column name="specialty" value="RADIOLOGY" />
+    </insert>
+    <insert tableName="vet_specialties">
+      <column name="vet_id" value="00000000-0000-4000-8000-000000000003" />
+      <column name="specialty" value="SURGERY" />
+    </insert>
+    <insert tableName="vet_specialties">
+      <column name="vet_id" value="00000000-0000-4000-8000-000000000003" />
+      <column name="specialty" value="DENTISTRY" />
+    </insert>
+    <insert tableName="vet_specialties">
+      <column name="vet_id" value="00000000-0000-4000-8000-000000000004" />
+      <column name="specialty" value="SURGERY" />
+    </insert>
+    <insert tableName="vet_specialties">
+      <column name="vet_id" value="00000000-0000-4000-8000-000000000005" />
+      <column name="specialty" value="RADIOLOGY" />
+    </insert>
+  </changeSet>
+</databaseChangeLog>

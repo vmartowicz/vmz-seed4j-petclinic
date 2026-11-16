@@ -1,72 +1,114 @@
 package com.petclinic.owner.domain;
 
-import com.petclinic.owner.domain.pettype.PetType;
+import com.petclinic.shared.error.domain.Assert;
 import java.time.LocalDate;
-import java.time.Period;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import org.jspecify.annotations.Nullable;
 
-// Entités du domaine
-public class Pet {
+public final class Pet {
 
-  private Long id;
-  private String name;
+  private static final Comparator<Visit> BY_DATE = Comparator.comparing(Visit::date);
+
+  private final PetId id;
+  private final List<Visit> visits;
+
+  private PetName name;
   private LocalDate birthDate;
   private PetType type;
-  private Owner owner;
 
-  public Pet(String name, LocalDate birthDate, PetType type, Owner owner) {
-    this.name = name;
-    this.birthDate = birthDate;
-    this.type = type;
-    this.owner = owner;
+  private Pet(PetBuilder builder) {
+    Assert.notNull("id", builder.id);
+    Assert.notNull("name", builder.name);
+    Assert.notNull("birthDate", builder.birthDate);
+    Assert.notNull("type", builder.type);
+    Assert.field("visits", builder.visits).notNull().noNullElement();
+
+    id = builder.id;
+    name = builder.name;
+    birthDate = builder.birthDate;
+    type = builder.type;
+    visits = new ArrayList<>(builder.visits);
   }
 
-  // Logique métier
-  public int getAge() {
-    return Period.between(birthDate, LocalDate.now()).getYears();
+  public static PetBuilder builder() {
+    return new PetBuilder();
   }
 
-  public boolean isAdult() {
-    return getAge() >= 1;
+  void update(PetToUpdate pet) {
+    name = pet.name();
+    birthDate = pet.birthDate();
+    type = pet.type();
   }
 
-  // Getters/Setters
-  public Long getId() {
+  void add(Visit visit) {
+    visits.add(visit);
+  }
+
+  public PetId id() {
     return id;
   }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getName() {
+  public PetName name() {
     return name;
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public LocalDate getBirthDate() {
+  public LocalDate birthDate() {
     return birthDate;
   }
 
-  public void setBirthDate(LocalDate birthDate) {
-    this.birthDate = birthDate;
-  }
-
-  public PetType getType() {
+  public PetType type() {
     return type;
   }
 
-  public void setType(PetType type) {
-    this.type = type;
+  public List<Visit> visits() {
+    return visits.stream().sorted(BY_DATE).toList();
   }
 
-  public Owner getOwner() {
-    return owner;
-  }
+  public static final class PetBuilder {
 
-  public void setOwner(Owner owner) {
-    this.owner = owner;
+    private @Nullable PetId id;
+    private @Nullable PetName name;
+    private @Nullable LocalDate birthDate;
+    private @Nullable PetType type;
+    private Collection<Visit> visits = List.of();
+
+    private PetBuilder() {}
+
+    public PetBuilder id(PetId id) {
+      this.id = id;
+
+      return this;
+    }
+
+    public PetBuilder name(PetName name) {
+      this.name = name;
+
+      return this;
+    }
+
+    public PetBuilder birthDate(LocalDate birthDate) {
+      this.birthDate = birthDate;
+
+      return this;
+    }
+
+    public PetBuilder type(PetType type) {
+      this.type = type;
+
+      return this;
+    }
+
+    public PetBuilder visits(Collection<Visit> visits) {
+      this.visits = visits;
+
+      return this;
+    }
+
+    public Pet build() {
+      return new Pet(this);
+    }
   }
 }
