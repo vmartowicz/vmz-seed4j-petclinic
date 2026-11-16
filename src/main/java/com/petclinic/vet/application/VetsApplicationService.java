@@ -1,7 +1,7 @@
 package com.petclinic.vet.application;
 
-import com.petclinic.shared.pagination.domain.JhipetclinicPage;
-import com.petclinic.shared.pagination.domain.JhipetclinicPageable;
+import com.petclinic.shared.pagination.domain.Seed4jpetclinicPage;
+import com.petclinic.shared.pagination.domain.Seed4jpetclinicPageable;
 import com.petclinic.vet.domain.Vet;
 import com.petclinic.vet.domain.VetsRepository;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class VetsApplicationService {
     this.vets = vets;
   }
 
-  public JhipetclinicPage<Vet> list(int page) {
-    return vets.list(new JhipetclinicPageable(page, PAGE_SIZE));
+  public Seed4jpetclinicPage<Vet> list(int page) {
+    return vets.list(new Seed4jpetclinicPageable(page, PAGE_SIZE));
   }
 }

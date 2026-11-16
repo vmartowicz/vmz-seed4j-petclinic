@@ -1,4 +1,4 @@
-# jhipetclinic — instructions for AI agents
+# seed4jpetclinic — instructions for AI agents
 
 This project was generated with [Seed4J](https://github.com/seed4j/seed4j) and follows a hexagonal architecture.
 

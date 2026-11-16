@@ -1,7 +1,7 @@
 package com.petclinic.owner.domain;
 
-import com.petclinic.shared.pagination.domain.JhipetclinicPage;
-import com.petclinic.shared.pagination.domain.JhipetclinicPageable;
+import com.petclinic.shared.pagination.domain.Seed4jpetclinicPage;
+import com.petclinic.shared.pagination.domain.Seed4jpetclinicPageable;
 import java.util.Optional;
 
 public interface OwnersRepository {
@@ -9,5 +9,5 @@ public interface OwnersRepository {
 
   Optional<Owner> get(OwnerId owner);
 
-  JhipetclinicPage<Owner> search(LastnameStart lastname, JhipetclinicPageable pageable);
+  Seed4jpetclinicPage<Owner> search(LastnameStart lastname, Seed4jpetclinicPageable pageable);
 }

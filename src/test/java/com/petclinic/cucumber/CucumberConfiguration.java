@@ -1,6 +1,6 @@
 package com.petclinic.cucumber;
 
-import com.petclinic.JhipetclinicApp;
+import com.petclinic.Seed4jpetclinicApp;
 import com.petclinic.cucumber.CucumberConfiguration.CucumberRestClientConfiguration;
 import com.petclinic.cucumber.rest.CucumberRestClient;
 import com.petclinic.cucumber.rest.CucumberRestTestContext;
@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.client.RestTestClient;
 @ActiveProfiles("test")
 @CucumberContextConfiguration
 @AutoConfigureRestTestClient
-@SpringBootTest(classes = { JhipetclinicApp.class, CucumberRestClientConfiguration.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = { Seed4jpetclinicApp.class, CucumberRestClientConfiguration.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
 public class CucumberConfiguration {
 
   private final CucumberRestClient rest;

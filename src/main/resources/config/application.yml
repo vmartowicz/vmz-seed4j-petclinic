@@ -4,7 +4,7 @@ logging:
       petclinic: INFO
 spring:
   application:
-    name: jhipetclinic
+    name: seed4jpetclinic
   datasource:
     driver-class-name: org.postgresql.Driver
     hikari:
@@ -12,8 +12,8 @@ spring:
       poolName: Hikari
     password: ''
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5432/jhipetclinic
-    username: jhipetclinic
+    url: jdbc:postgresql://localhost:5432/seed4jpetclinic
+    username: seed4jpetclinic
   task:
     execution:
       pool:
@@ -21,11 +21,11 @@ spring:
         max-size: 16
         queue-capacity: 100
         core-size: 8
-      thread-name-prefix: jhipetclinic-task-
+      thread-name-prefix: seed4jpetclinic-task-
     scheduling:
       pool:
         size: 2
-      thread-name-prefix: jhipetclinic-scheduling-
+      thread-name-prefix: seed4jpetclinic-scheduling-
   devtools:
     livereload:
       enabled: false

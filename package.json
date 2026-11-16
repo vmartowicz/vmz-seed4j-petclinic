@@ -1,8 +1,8 @@
 {
-  "name": "jhipetclinic",
+  "name": "seed4jpetclinic",
   "version": "0.0.0",
   "private": true,
-  "description": "jhipetclinic",
+  "description": "seed4jpetclinic",
   "license": "UNLICENSED",
   "type": "module",
   "scripts": {

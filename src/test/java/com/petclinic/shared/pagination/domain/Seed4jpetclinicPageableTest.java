@@ -8,32 +8,32 @@ import com.petclinic.shared.error.domain.NumberValueTooLowException;
 import org.junit.jupiter.api.Test;
 
 @UnitTest
-class JhipetclinicPageableTest {
+class Seed4jpetclinicPageableTest {
 
   @Test
   void shouldNotBuildWithNegativePage() {
-    assertThatThrownBy(() -> new JhipetclinicPageable(-1, 10))
+    assertThatThrownBy(() -> new Seed4jpetclinicPageable(-1, 10))
       .isExactlyInstanceOf(NumberValueTooLowException.class)
       .hasMessageContaining("page");
   }
 
   @Test
   void shouldNotBuildWithPageSizeAtZero() {
-    assertThatThrownBy(() -> new JhipetclinicPageable(0, 0))
+    assertThatThrownBy(() -> new Seed4jpetclinicPageable(0, 0))
       .isExactlyInstanceOf(NumberValueTooLowException.class)
       .hasMessageContaining("pageSize");
   }
 
   @Test
   void shouldNotBuildWithPageSizeOverHundred() {
-    assertThatThrownBy(() -> new JhipetclinicPageable(0, 101))
+    assertThatThrownBy(() -> new Seed4jpetclinicPageable(0, 101))
       .isExactlyInstanceOf(NumberValueTooHighException.class)
       .hasMessageContaining("pageSize");
   }
 
   @Test
   void shouldGetFirstPageInformation() {
-    var pageable = new JhipetclinicPageable(0, 15);
+    var pageable = new Seed4jpetclinicPageable(0, 15);
 
     assertThat(pageable.page()).isZero();
     assertThat(pageable.pageSize()).isEqualTo(15);
@@ -42,7 +42,7 @@ class JhipetclinicPageableTest {
 
   @Test
   void shouldGetPageableInformation() {
-    var pageable = new JhipetclinicPageable(2, 15);
+    var pageable = new Seed4jpetclinicPageable(2, 15);
 
     assertThat(pageable.page()).isEqualTo(2);
     assertThat(pageable.pageSize()).isEqualTo(15);

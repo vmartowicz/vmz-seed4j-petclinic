@@ -1,6 +1,6 @@
 package com.petclinic.shared.pagination.domain;
 
-import static com.petclinic.shared.pagination.domain.JhipetclinicPagesFixture.*;
+import static com.petclinic.shared.pagination.domain.Seed4jpetclinicPagesFixture.*;
 import static org.assertj.core.api.Assertions.*;
 
 import com.petclinic.UnitTest;
@@ -9,23 +9,23 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 @UnitTest
-class JhipetclinicPageTest {
+class Seed4jpetclinicPageTest {
 
   @Test
   void shouldGetEmptySinglePageWithoutContent() {
-    JhipetclinicPage<String> page = JhipetclinicPage.singlePage(null);
+    Seed4jpetclinicPage<String> page = Seed4jpetclinicPage.singlePage(null);
 
     assertEmptyPage(page);
   }
 
   @Test
   void shouldGetEmptySinglePageFromBuilderWithoutContent() {
-    JhipetclinicPage<?> page = JhipetclinicPage.builder(null).build();
+    Seed4jpetclinicPage<?> page = Seed4jpetclinicPage.builder(null).build();
 
     assertEmptyPage(page);
   }
 
-  private void assertEmptyPage(JhipetclinicPage<?> page) {
+  private void assertEmptyPage(Seed4jpetclinicPage<?> page) {
     assertThat(page.content()).isEmpty();
     assertThat(page.currentPage()).isZero();
     assertThat(page.pageSize()).isZero();
@@ -34,19 +34,19 @@ class JhipetclinicPageTest {
 
   @Test
   void shouldGetSinglePage() {
-    JhipetclinicPage<String> page = JhipetclinicPage.singlePage(List.of("test", "dummy"));
+    Seed4jpetclinicPage<String> page = Seed4jpetclinicPage.singlePage(List.of("test", "dummy"));
 
     assertSinglePage(page);
   }
 
   @Test
   void shouldGetSinglePageFromBuilderWithContentOnly() {
-    JhipetclinicPage<String> page = JhipetclinicPage.builder(List.of("test", "dummy")).build();
+    Seed4jpetclinicPage<String> page = Seed4jpetclinicPage.builder(List.of("test", "dummy")).build();
 
     assertSinglePage(page);
   }
 
-  private void assertSinglePage(JhipetclinicPage<String> page) {
+  private void assertSinglePage(Seed4jpetclinicPage<String> page) {
     assertThat(page.content()).containsExactly("test", "dummy");
     assertThat(page.currentPage()).isZero();
     assertThat(page.pageSize()).isEqualTo(2);
@@ -56,7 +56,7 @@ class JhipetclinicPageTest {
 
   @Test
   void shouldGetFullPage() {
-    JhipetclinicPage<String> page = pageBuilder().build();
+    Seed4jpetclinicPage<String> page = pageBuilder().build();
 
     assertThat(page.content()).containsExactly("test");
     assertThat(page.currentPage()).isEqualTo(2);
@@ -74,7 +74,7 @@ class JhipetclinicPageTest {
 
   @Test
   void shouldMapPage() {
-    JhipetclinicPage<String> page = pageBuilder()
+    Seed4jpetclinicPage<String> page = pageBuilder()
       .build()
       .map(entry -> "hey");
 
@@ -92,12 +92,12 @@ class JhipetclinicPageTest {
 
   @Test
   void shouldBeLastWithOnePage() {
-    assertThat(JhipetclinicPage.singlePage(List.of("d")).isNotLast()).isFalse();
+    assertThat(Seed4jpetclinicPage.singlePage(List.of("d")).isNotLast()).isFalse();
   }
 
   @Test
   void shouldBeLastPageWithoutContent() {
-    JhipetclinicPage<Object> page = JhipetclinicPage.builder(List.of()).currentPage(0).pageSize(1).totalElementsCount(0).build();
+    Seed4jpetclinicPage<Object> page = Seed4jpetclinicPage.builder(List.of()).currentPage(0).pageSize(1).totalElementsCount(0).build();
     assertThat(page.isNotLast()).isFalse();
   }
 
@@ -108,7 +108,7 @@ class JhipetclinicPageTest {
 
   @Test
   void shouldGetPageFromElements() {
-    JhipetclinicPage<String> page = JhipetclinicPage.of(List.of("hello", "java", "world"), new JhipetclinicPageable(1, 1));
+    Seed4jpetclinicPage<String> page = Seed4jpetclinicPage.of(List.of("hello", "java", "world"), new Seed4jpetclinicPageable(1, 1));
 
     assertThat(page.currentPage()).isEqualTo(1);
     assertThat(page.hasNext()).isTrue();
@@ -120,7 +120,7 @@ class JhipetclinicPageTest {
 
   @Test
   void shouldGetEmptyPageFromOutOfBoundElements() {
-    JhipetclinicPage<String> page = JhipetclinicPage.of(List.of("hello", "java", "world"), new JhipetclinicPageable(4, 1));
+    Seed4jpetclinicPage<String> page = Seed4jpetclinicPage.of(List.of("hello", "java", "world"), new Seed4jpetclinicPageable(4, 1));
 
     assertThat(page.currentPage()).isEqualTo(4);
     assertThat(page.hasNext()).isFalse();
@@ -132,7 +132,7 @@ class JhipetclinicPageTest {
 
   @Test
   void shouldGetPageWithLessThanExpectedElements() {
-    JhipetclinicPage<String> page = JhipetclinicPage.of(List.of("hello", "java", "world"), new JhipetclinicPageable(0, 4));
+    Seed4jpetclinicPage<String> page = Seed4jpetclinicPage.of(List.of("hello", "java", "world"), new Seed4jpetclinicPageable(0, 4));
 
     assertThat(page.currentPage()).isZero();
     assertThat(page.hasNext()).isFalse();

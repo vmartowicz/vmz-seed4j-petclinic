@@ -5,13 +5,13 @@ import com.petclinic.shared.generation.domain.ExcludeFromGeneratedCodeCoverage;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public final class JhipetclinicPageable {
+public final class Seed4jpetclinicPageable {
 
   private final int page;
   private final int pageSize;
   private final int offset;
 
-  public JhipetclinicPageable(int page, int pageSize) {
+  public Seed4jpetclinicPageable(int page, int pageSize) {
     Assert.field("page", page).min(0);
     Assert.field("pageSize", pageSize).min(1).max(100);
 
@@ -49,7 +49,7 @@ public final class JhipetclinicPageable {
       return false;
     }
 
-    JhipetclinicPageable other = (JhipetclinicPageable) obj;
+    Seed4jpetclinicPageable other = (Seed4jpetclinicPageable) obj;
     return new EqualsBuilder().append(page, other.page).append(pageSize, other.pageSize).build();
   }
 }

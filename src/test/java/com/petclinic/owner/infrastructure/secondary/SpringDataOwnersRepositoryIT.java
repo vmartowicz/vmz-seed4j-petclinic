@@ -12,8 +12,8 @@ import com.petclinic.owner.domain.LastnameStart;
 import com.petclinic.owner.domain.Owner;
 import com.petclinic.owner.domain.OwnerToCreate;
 import com.petclinic.owner.domain.Telephone;
-import com.petclinic.shared.pagination.domain.JhipetclinicPage;
-import com.petclinic.shared.pagination.domain.JhipetclinicPageable;
+import com.petclinic.shared.pagination.domain.Seed4jpetclinicPage;
+import com.petclinic.shared.pagination.domain.Seed4jpetclinicPageable;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +50,7 @@ class SpringDataOwnersRepositoryIT {
     saved(prefix + "son");
     saved(prefix + "berg");
 
-    JhipetclinicPage<Owner> page = owners.search(new LastnameStart(prefix.toUpperCase()), new JhipetclinicPageable(0, 5));
+    Seed4jpetclinicPage<Owner> page = owners.search(new LastnameStart(prefix.toUpperCase()), new Seed4jpetclinicPageable(0, 5));
 
     assertThat(page.content())
       .extracting(owner -> owner.lastname().get())
@@ -62,7 +62,7 @@ class SpringDataOwnersRepositoryIT {
     String prefix = uniquePrefix();
     saved("x" + prefix);
 
-    assertThat(owners.search(new LastnameStart(prefix), new JhipetclinicPageable(0, 5)).content()).isEmpty();
+    assertThat(owners.search(new LastnameStart(prefix), new Seed4jpetclinicPageable(0, 5)).content()).isEmpty();
   }
 
   @Test
@@ -70,14 +70,14 @@ class SpringDataOwnersRepositoryIT {
     String prefix = uniquePrefix();
     saved(prefix + "son");
 
-    assertThat(owners.search(new LastnameStart(prefix.substring(0, 2) + "%"), new JhipetclinicPageable(0, 5)).content()).isEmpty();
+    assertThat(owners.search(new LastnameStart(prefix.substring(0, 2) + "%"), new Seed4jpetclinicPageable(0, 5)).content()).isEmpty();
   }
 
   @Test
   void shouldReturnAllOwnersWithoutLastname() {
     saved(uniquePrefix());
 
-    JhipetclinicPage<Owner> page = owners.search(new LastnameStart(null), new JhipetclinicPageable(0, 5));
+    Seed4jpetclinicPage<Owner> page = owners.search(new LastnameStart(null), new Seed4jpetclinicPageable(0, 5));
 
     assertThat(page.totalElementsCount()).isEqualTo(jpaOwners.count());
   }
@@ -89,7 +89,7 @@ class SpringDataOwnersRepositoryIT {
       saved(prefix + i);
     }
 
-    JhipetclinicPage<Owner> page = owners.search(new LastnameStart(prefix), new JhipetclinicPageable(1, 5));
+    Seed4jpetclinicPage<Owner> page = owners.search(new LastnameStart(prefix), new Seed4jpetclinicPageable(1, 5));
 
     assertThat(page.content())
       .extracting(owner -> owner.lastname().get())

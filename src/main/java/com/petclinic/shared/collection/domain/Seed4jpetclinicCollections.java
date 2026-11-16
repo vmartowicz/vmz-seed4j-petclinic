@@ -10,9 +10,9 @@ import org.jspecify.annotations.Nullable;
 /**
  * Null safe utility class to manage collections
  */
-public final class JhipetclinicCollections {
+public final class Seed4jpetclinicCollections {
 
-  private JhipetclinicCollections() {}
+  private Seed4jpetclinicCollections() {}
 
   /**
    * Get an immutable collection from the given collection

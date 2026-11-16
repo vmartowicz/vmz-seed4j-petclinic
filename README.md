@@ -1,4 +1,4 @@
-# jhipetclinic
+# seed4jpetclinic
 
 ## Prerequisites
 

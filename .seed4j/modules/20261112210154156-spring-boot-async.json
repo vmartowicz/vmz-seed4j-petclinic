@@ -5,10 +5,10 @@
     "endOfLine": "lf",
     "springConfigurationFormat": "yaml",
     "packageName": "com.petclinic",
-    "projectName": "jhipetclinic",
+    "projectName": "seed4jpetclinic",
     "nodePackageManager": "npm",
     "serverPort": 8080,
     "indentSize": 2,
-    "baseName": "jhipetclinic"
+    "baseName": "seed4jpetclinic"
   }
 }

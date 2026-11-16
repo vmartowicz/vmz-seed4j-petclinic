@@ -7,10 +7,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.petclinic</groupId>
-  <artifactId>jhipetclinic</artifactId>
+  <artifactId>seed4jpetclinic</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>jhipetclinic</name>
-  <description>jhipetclinic</description>
+  <name>seed4jpetclinic</name>
+  <description>seed4jpetclinic</description>
   <packaging>jar</packaging>
   <dependencyManagement>
     <dependencies>
@@ -412,7 +412,7 @@
             </execution>
           </executions>
           <configuration>
-            <mainClass>com.petclinic.JhipetclinicApp</mainClass>
+            <mainClass>com.petclinic.Seed4jpetclinicApp</mainClass>
           </configuration>
         </plugin>
         <plugin>
