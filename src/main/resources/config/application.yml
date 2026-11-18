@@ -59,6 +59,8 @@ spring:
     change-log: classpath:config/liquibase/master.xml
   jackson:
     default-property-inclusion: non_absent
+  profiles:
+    active: '@spring.profiles.active@'
 management:
   endpoint:
     health:
