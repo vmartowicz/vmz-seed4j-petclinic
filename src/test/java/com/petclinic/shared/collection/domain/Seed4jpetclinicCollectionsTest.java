@@ -15,16 +15,16 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 @UnitTest
-class JhipetclinicCollectionsTest {
+class Seed4jpetclinicCollectionsTest {
 
   @Nested
   @DisplayName("Collections")
-  class JhipetclinicCollectionsCollectionsTest {
+  class Seed4jpetclinicCollectionsCollectionsTest {
 
     @Test
     void shouldGetEmptyImmutableCollectionFromNullCollection() {
       Collection<Object> input = null;
-      Collection<Object> collection = JhipetclinicCollections.immutable(input);
+      Collection<Object> collection = Seed4jpetclinicCollections.immutable(input);
 
       assertThat(collection).isEmpty();
       assertThatThrownBy(collection::clear).isExactlyInstanceOf(UnsupportedOperationException.class);
@@ -34,7 +34,7 @@ class JhipetclinicCollectionsTest {
     void shouldGetImmutableCollectionFromMutableCollection() {
       Collection<String> input = new ArrayList<>();
       input.add("value");
-      Collection<String> collection = JhipetclinicCollections.immutable(input);
+      Collection<String> collection = Seed4jpetclinicCollections.immutable(input);
 
       assertThat(collection).containsExactly("value");
       assertThatThrownBy(collection::clear).isExactlyInstanceOf(UnsupportedOperationException.class);
@@ -43,12 +43,12 @@ class JhipetclinicCollectionsTest {
 
   @Nested
   @DisplayName("Set")
-  class JhipetclinicCollectionsSetTest {
+  class Seed4jpetclinicCollectionsSetTest {
 
     @Test
     void shouldGetEmptyImmutableCollectionFromNullCollection() {
       Set<Object> input = null;
-      Set<Object> set = JhipetclinicCollections.immutable(input);
+      Set<Object> set = Seed4jpetclinicCollections.immutable(input);
 
       assertThat(set).isEmpty();
       assertThatThrownBy(set::clear).isExactlyInstanceOf(UnsupportedOperationException.class);
@@ -58,7 +58,7 @@ class JhipetclinicCollectionsTest {
     void shouldGetImmutableCollectionFromMutableCollection() {
       Set<String> input = new HashSet<>();
       input.add("value");
-      Set<String> set = JhipetclinicCollections.immutable(input);
+      Set<String> set = Seed4jpetclinicCollections.immutable(input);
 
       assertThat(set).containsExactly("value");
       assertThatThrownBy(set::clear).isExactlyInstanceOf(UnsupportedOperationException.class);
@@ -67,12 +67,12 @@ class JhipetclinicCollectionsTest {
 
   @Nested
   @DisplayName("List")
-  class JhipetclinicCollectionsListTest {
+  class Seed4jpetclinicCollectionsListTest {
 
     @Test
     void shouldGetEmptyImmutableCollectionFromNullCollection() {
       List<Object> input = null;
-      List<Object> list = JhipetclinicCollections.immutable(input);
+      List<Object> list = Seed4jpetclinicCollections.immutable(input);
 
       assertThat(list).isEmpty();
       assertThatThrownBy(list::clear).isExactlyInstanceOf(UnsupportedOperationException.class);
@@ -82,7 +82,7 @@ class JhipetclinicCollectionsTest {
     void shouldGetImmutableCollectionFromMutableCollection() {
       List<String> input = new ArrayList<>();
       input.add("value");
-      List<String> list = JhipetclinicCollections.immutable(input);
+      List<String> list = Seed4jpetclinicCollections.immutable(input);
 
       assertThat(list).containsExactly("value");
       assertThatThrownBy(list::clear).isExactlyInstanceOf(UnsupportedOperationException.class);
@@ -91,12 +91,12 @@ class JhipetclinicCollectionsTest {
 
   @Nested
   @DisplayName("Map")
-  class JhipetclinicMapTest {
+  class Seed4jpetclinicMapTest {
 
     @Test
     void shouldGetEmptyImmutableMapFromNullMap() {
       Map<Object, Object> input = null;
-      Map<Object, Object> map = JhipetclinicCollections.immutable(input);
+      Map<Object, Object> map = Seed4jpetclinicCollections.immutable(input);
 
       assertThat(map).isEmpty();
       assertThatThrownBy(map::clear).isExactlyInstanceOf(UnsupportedOperationException.class);
@@ -106,7 +106,7 @@ class JhipetclinicCollectionsTest {
     void shouldGetImmutableMapFromMutableMap() {
       Map<String, String> input = new HashMap<>();
       input.put("key", "value");
-      Map<String, String> map = JhipetclinicCollections.immutable(input);
+      Map<String, String> map = Seed4jpetclinicCollections.immutable(input);
 
       assertThat(map).containsExactly(Map.entry("key", "value"));
       assertThatThrownBy(map::clear).isExactlyInstanceOf(UnsupportedOperationException.class);

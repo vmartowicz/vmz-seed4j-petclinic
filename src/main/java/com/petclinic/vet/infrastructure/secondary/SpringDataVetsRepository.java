@@ -1,8 +1,8 @@
 package com.petclinic.vet.infrastructure.secondary;
 
 import com.petclinic.shared.error.domain.Assert;
-import com.petclinic.shared.pagination.domain.JhipetclinicPage;
-import com.petclinic.shared.pagination.domain.JhipetclinicPageable;
+import com.petclinic.shared.pagination.domain.Seed4jpetclinicPage;
+import com.petclinic.shared.pagination.domain.Seed4jpetclinicPageable;
 import com.petclinic.vet.domain.Vet;
 import com.petclinic.vet.domain.VetsRepository;
 import org.springframework.data.domain.Page;
@@ -22,12 +22,12 @@ class SpringDataVetsRepository implements VetsRepository {
   }
 
   @Override
-  public JhipetclinicPage<Vet> list(JhipetclinicPageable pageable) {
+  public Seed4jpetclinicPage<Vet> list(Seed4jpetclinicPageable pageable) {
     Assert.notNull("pageable", pageable);
 
     Page<VetEntity> page = vets.findAll(PageRequest.of(pageable.page(), pageable.pageSize(), BY_NAME));
 
-    return JhipetclinicPage.builder(page.getContent().stream().map(VetEntity::toDomain).toList())
+    return Seed4jpetclinicPage.builder(page.getContent().stream().map(VetEntity::toDomain).toList())
       .currentPage(pageable.page())
       .pageSize(pageable.pageSize())
       .totalElementsCount(page.getTotalElements())

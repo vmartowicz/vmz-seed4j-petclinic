@@ -17,11 +17,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 @Component
-public class JhipetclinicAuthorizations {
+public class Seed4jpetclinicAuthorizations {
 
   private final RolesAccesses accesses;
 
-  public JhipetclinicAuthorizations(Collection<RolesAccesses> accesses) {
+  public Seed4jpetclinicAuthorizations(Collection<RolesAccesses> accesses) {
     this.accesses = accesses.stream().reduce(RolesAccesses.EMPTY, RolesAccesses::merge);
   }
 

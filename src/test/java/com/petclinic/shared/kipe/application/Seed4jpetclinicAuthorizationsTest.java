@@ -20,9 +20,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @UnitTest
-class JhipetclinicAuthorizationsTest {
+class Seed4jpetclinicAuthorizationsTest {
 
-  private static final JhipetclinicAuthorizations authorizations = new JhipetclinicAuthorizations(List.of(rolesAccesses()));
+  private static final Seed4jpetclinicAuthorizations authorizations = new Seed4jpetclinicAuthorizations(List.of(rolesAccesses()));
 
   @Nested
   class AllAuthorized {

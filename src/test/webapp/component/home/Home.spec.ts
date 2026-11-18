@@ -1,6 +1,6 @@
 describe('Home', () => {
   it('display home page', () => {
     cy.visit('/');
-    cy.title().should('include', 'jhipetclinic');
+    cy.title().should('include', 'seed4jpetclinic');
   });
 });

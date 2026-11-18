@@ -4,7 +4,7 @@
 
 ## The project
 
-- Name: jhipetclinic
+- Name: seed4jpetclinic
 - Base package: `com.petclinic`
 - Architecture: hexagonal, one bounded context per business area.
 

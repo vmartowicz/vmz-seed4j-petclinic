@@ -18,7 +18,7 @@ class SpringdocConfiguration {
   private String version;
 
   @Bean
-  public OpenAPI jhipetclinicOpenAPI() {
+  public OpenAPI seed4jpetclinicOpenAPI() {
     return new OpenAPI().info(swaggerInfo()).externalDocs(swaggerExternalDoc());
   }
 
@@ -35,7 +35,7 @@ class SpringdocConfiguration {
   }
 
   @Bean
-  public GroupedOpenApi jhipetclinicAllOpenAPI() {
+  public GroupedOpenApi seed4jpetclinicAllOpenAPI() {
     return GroupedOpenApi.builder().group("all").pathsToMatch("/api/**").build();
   }
 }

@@ -9,12 +9,12 @@ import org.springframework.core.env.Environment;
 
 @SpringBootApplication
 @ExcludeFromGeneratedCodeCoverage(reason = "Not testing logs")
-public class JhipetclinicApp {
+public class Seed4jpetclinicApp {
 
-  private static final Logger log = LoggerFactory.getLogger(JhipetclinicApp.class);
+  private static final Logger log = LoggerFactory.getLogger(Seed4jpetclinicApp.class);
 
   public static void main(String[] args) {
-    Environment env = SpringApplication.run(JhipetclinicApp.class, args).getEnvironment();
+    Environment env = SpringApplication.run(Seed4jpetclinicApp.class, args).getEnvironment();
 
     if (log.isInfoEnabled()) {
       log.info(ApplicationStartupTraces.of(env));

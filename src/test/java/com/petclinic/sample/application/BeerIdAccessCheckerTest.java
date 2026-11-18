@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import com.petclinic.UnitTest;
 import com.petclinic.shared.kipe.application.AccessContext;
-import com.petclinic.shared.kipe.application.JhipetclinicAuthorizations;
+import com.petclinic.shared.kipe.application.Seed4jpetclinicAuthorizations;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 class BeerIdAccessCheckerTest {
 
   private static final BeerIdAccessChecker checker = new BeerIdAccessChecker(
-    new JhipetclinicAuthorizations(List.of(new BeersAccessesConfiguration().beersAccesses()))
+    new Seed4jpetclinicAuthorizations(List.of(new BeersAccessesConfiguration().beersAccesses()))
   );
 
   @Test

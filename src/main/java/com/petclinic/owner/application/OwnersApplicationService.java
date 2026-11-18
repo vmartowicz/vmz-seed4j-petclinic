@@ -14,8 +14,8 @@ import com.petclinic.owner.domain.PetType;
 import com.petclinic.owner.domain.UnknownOwnerException;
 import com.petclinic.owner.domain.Visit;
 import com.petclinic.owner.domain.VisitToCreate;
-import com.petclinic.shared.pagination.domain.JhipetclinicPage;
-import com.petclinic.shared.pagination.domain.JhipetclinicPageable;
+import com.petclinic.shared.pagination.domain.Seed4jpetclinicPage;
+import com.petclinic.shared.pagination.domain.Seed4jpetclinicPageable;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.util.List;
@@ -52,8 +52,8 @@ public class OwnersApplicationService {
   }
 
   @Transactional(readOnly = true)
-  public JhipetclinicPage<Owner> search(LastnameStart lastname, int page) {
-    return owners.search(lastname, new JhipetclinicPageable(page, PAGE_SIZE));
+  public Seed4jpetclinicPage<Owner> search(LastnameStart lastname, int page) {
+    return owners.search(lastname, new Seed4jpetclinicPageable(page, PAGE_SIZE));
   }
 
   @Transactional(readOnly = true)

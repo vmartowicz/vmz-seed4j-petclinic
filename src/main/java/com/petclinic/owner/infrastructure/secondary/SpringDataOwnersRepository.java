@@ -5,8 +5,8 @@ import com.petclinic.owner.domain.Owner;
 import com.petclinic.owner.domain.OwnerId;
 import com.petclinic.owner.domain.OwnersRepository;
 import com.petclinic.shared.error.domain.Assert;
-import com.petclinic.shared.pagination.domain.JhipetclinicPage;
-import com.petclinic.shared.pagination.domain.JhipetclinicPageable;
+import com.petclinic.shared.pagination.domain.Seed4jpetclinicPage;
+import com.petclinic.shared.pagination.domain.Seed4jpetclinicPageable;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,7 +39,7 @@ class SpringDataOwnersRepository implements OwnersRepository {
   }
 
   @Override
-  public JhipetclinicPage<Owner> search(LastnameStart lastname, JhipetclinicPageable pageable) {
+  public Seed4jpetclinicPage<Owner> search(LastnameStart lastname, Seed4jpetclinicPageable pageable) {
     Assert.notNull("lastname", lastname);
     Assert.notNull("pageable", pageable);
 
@@ -48,7 +48,7 @@ class SpringDataOwnersRepository implements OwnersRepository {
       PageRequest.of(pageable.page(), pageable.pageSize(), BY_NAME)
     );
 
-    return JhipetclinicPage.builder(page.getContent().stream().map(OwnerEntity::toDomain).toList())
+    return Seed4jpetclinicPage.builder(page.getContent().stream().map(OwnerEntity::toDomain).toList())
       .currentPage(pageable.page())
       .pageSize(pageable.pageSize())
       .totalElementsCount(page.getTotalElements())
