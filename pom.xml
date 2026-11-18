@@ -224,7 +224,20 @@
     <cucumber.version>8.0.4</cucumber.version>
     <json-web-token.version>0.13.0</json-web-token.version>
     <springdoc-openapi.version>3.2.0</springdoc-openapi.version>
+    <maven-resources-plugin.version>3.5.0</maven-resources-plugin.version>
+    <spring.profiles.active />
   </properties>
+  <profiles>
+    <profile>
+      <id>local</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <spring.profiles.active>local</spring.profiles.active>
+      </properties>
+    </profile>
+  </profiles>
 
   <build>
     <resources>
@@ -437,6 +450,16 @@
               <includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>
             </includeOnlyProperties>
             <verbose>false</verbose>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>${maven-resources-plugin.version}</version>
+          <configuration>
+            <useDefaultDelimiters>false</useDefaultDelimiters>
+            <delimiters>
+              <delimiter>@</delimiter>
+            </delimiters>
           </configuration>
         </plugin>
       </plugins>
